@@ -1,11 +1,11 @@
 {
   "name": "ongaku-music",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
   "author": "example.com",
   "type": "module",
-  "homepage": "https://electron-vite.org",
+  "homepage": "https://github.com/miguedev1047/ongaku-music",
   "build": {
     "appId": "com.ongaku.music",
     "productName": "Ongaku Music",
