@@ -1,10 +1,14 @@
 {
   "name": "ongaku-music",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
-  "author": "example.com",
   "type": "module",
+  "author": {
+    "name": "Miguel Angel",
+    "email": "miguedev1047@gmail.com",
+    "url": "https://github.com/miguedev1047"
+  },
   "homepage": "https://github.com/miguedev1047/ongaku-music",
   "build": {
     "appId": "com.ongaku.music",
@@ -37,7 +41,14 @@
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
     "build:mac": "electron-vite build && electron-builder --mac",
-    "build:linux": "electron-vite build && electron-builder --linux"
+    "build:linux": "electron-vite build && electron-builder --linux",
+    "check:token": "bash scripts/check-gh-token.sh",
+    "build:linux:publish": "npm run build && electron-builder --linux --publish always",
+    "build:win:publish": "npm run build && electron-builder --win --publish always",
+    "build:mac:publish": "npm run build && electron-builder --mac --publish always",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major"
   },
   "dependencies": {
     "@base-ui/react": "^1.0.0",

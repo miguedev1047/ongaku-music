@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: ongaku-music
+appId: com.ongaku.music
+productName: Ongaku Music
 directories:
   buildResources: build
 files:
@@ -14,8 +14,9 @@ asarUnpack:
 linux:
   target:
     - AppImage
+    - deb
   maintainer: electronjs.org
-  category: Utility
+  category: Audio
 appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false

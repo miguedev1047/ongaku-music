@@ -25,6 +25,7 @@ import { downloadSong } from './lib/downloader-core'
 import { getSongByFilename } from './lib/song-manager'
 import { PRIVILEGES } from '../shared/constants'
 import { startMediaServer } from '../server'
+import { setupAutoUpdater } from './updater'
 
 // Create a protocol handler
 protocol.registerSchemesAsPrivileged([
@@ -63,6 +64,8 @@ const createWindow = () => {
   mainWindow.on('ready-to-show', () => {
     setTimeout(() => mainWindow.show(), 500)
   })
+
+  setupAutoUpdater(mainWindow)
 }
 
 // This method will be called when Electron has finished
