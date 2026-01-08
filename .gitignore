@@ -4,4 +4,12 @@ out
 .DS_Store
 .eslintcache
 *.log*
+scripts
 .tanstack
+.env
+.env.*
+pnpm-lock.yaml
+bun.lockb
+tsconfig.json
+tsconfig.*.json
+.vscode

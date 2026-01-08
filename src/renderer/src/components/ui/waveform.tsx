@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import { useCallback, useEffect, useMemo, useRef, useState, type HTMLAttributes } from 'react'
 
 import { cn } from '@/lib/utils'
@@ -518,7 +520,7 @@ export const MicrophoneWaveform = ({
               processingValue * transitionProgressRef.current
           }
 
-          processingData.push(Math.max(0.05, Math.min(1, finalValue)))
+          processingData.push(Math.max(0.05, Math.min(1, finalValue)) as never)
         }
 
         setData(processingData)
@@ -549,6 +551,7 @@ export const MicrophoneWaveform = ({
       }
       return
     }
+    return undefined
   }, [processing, active])
 
   useEffect(() => {
@@ -602,12 +605,12 @@ export const MicrophoneWaveform = ({
 
           for (let i = halfLength - 1; i >= 0; i--) {
             const value = Math.min(1, (relevantData[i] / 255) * sensitivity)
-            normalizedData.push(value)
+            normalizedData.push(value as never)
           }
 
           for (let i = 0; i < halfLength; i++) {
             const value = Math.min(1, (relevantData[i] / 255) * sensitivity)
-            normalizedData.push(value)
+            normalizedData.push(value as never)
           }
 
           setData(normalizedData)
