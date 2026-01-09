@@ -5,10 +5,10 @@ import type {
   NotifyChangeModel,
   WatchPlaylistModel,
   DownloadSongModel,
-  ResponseModel
+  ResponseModel,
+  DownloadSongProgressModel
 } from '../shared/models'
 import type { ElectronAPI } from '@electron-toolkit/preload'
-import type { VideoProgress } from 'ytdlp-nodejs'
 
 declare global {
   interface Window {
@@ -25,7 +25,7 @@ declare global {
       renamePlaylist: (props: RemovePlaylistModel) => Promise<ResponseModel>
       openFolderPlaylist: (playlistName: string) => Promise<void>
       downloadSong: (props: DownloadSongModel) => Promise<ResponseModel>
-      onDownloadProgress: (callback: (progress: VideoProgress) => void) => void
+      onDownloadSongProgress: (callback: (data: DownloadSongProgressModel) => void) => void
       onPlaylistUpdated: (callback: (props: NotifyChangeModel) => void) => void
       removePlaylistListener: () => void
       startWatchPlaylist: (props: WatchPlaylistModel) => void

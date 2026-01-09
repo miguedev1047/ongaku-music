@@ -1,4 +1,5 @@
 import type { BrowserWindow } from 'electron'
+import type { PlaylistInfo, VideoInfo, VideoProgress } from 'ytdlp-nodejs'
 
 export interface ResponseModel {
   message: string
@@ -87,4 +88,9 @@ export interface NotifyChangeModel {
   win: BrowserWindow
   playlistName: string
   changeType: string
+}
+
+export interface DownloadSongProgressModel {
+  progress: VideoProgress
+  info: VideoInfo | PlaylistInfo
 }

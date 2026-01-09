@@ -12,6 +12,7 @@ import type {
 
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+import { DownloadSongProgressModel } from '../shared/models'
 
 const api = {
   getPlaylists: (...args: Parameters<GetPlaylists>) => ipcRenderer.invoke('get-playlists', ...args),
@@ -32,6 +33,11 @@ const api = {
   onDownloadProgress: (callback: (progress: VideoProgress) => void) => {
     ipcRenderer.on('download-progress', (_, progress) => {
       callback(progress)
+    })
+  },
+  onDownloadSongProgress: (callback: (data: DownloadSongProgressModel) => void) => {
+    ipcRenderer.on('on-download-progress-song', (_, data) => {
+      callback(data)
     })
   }
 

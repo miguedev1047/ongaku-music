@@ -1,5 +1,3 @@
-import type { VideoProgress } from 'ytdlp-nodejs'
-
 import {
   Select,
   SelectContent,
@@ -17,7 +15,7 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import { FieldGroup, Field, FieldLabel, FieldDescription, FieldError } from '@/components/ui/field'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { playlistQueryOpts } from '@/queries/playlists-queries'
 import { DOWNLOAD_OPTS } from '@/constants/general'
 import { DownloadCloud, Folder } from 'lucide-react'
@@ -27,21 +25,24 @@ import { Input } from '@/components/ui/input'
 import { RainbowButton } from '@/components/ui/rainbow-button'
 import { getFinalUrl } from '@/helpers/get-final-url'
 import { toast } from 'sonner'
-import { useEffect, useState } from 'react'
-import { Progress } from '../ui/progress'
+import { useDownloadStore } from '@/stores/download-store'
+import { DownloadInfo } from '@/components/shared/download-info'
 
 export function DownloadForm() {
-  const [isDownloading, setIsDownloading] = useState(false)
-  const [progress, setProgress] = useState<VideoProgress | null>(null)
+  const queryClient = useQueryClient()
+
+  const isDownloading = useDownloadStore((state) => state.isDownloading)
+  const setIsDownloading = useDownloadStore((state) => state.setIsDownloading)
+  const setProgress = useDownloadStore((state) => state.setProgress)
 
   const { data: playlists } = useSuspenseQuery(playlistQueryOpts)
 
-  useEffect(() => {
-    const unsuscribe = window.api.onDownloadProgress((progress) => {
-      setProgress(progress)
-    })
-    return unsuscribe
-  }, [])
+  // useEffect(() => {
+  //   const unsuscribe = window.api.onDownloadProgress((progress) => {
+  //     setProgress(progress)
+  //   })
+  //   return unsuscribe
+  // }, [])
 
   const form = useForm({
     defaultValues: {
@@ -67,6 +68,7 @@ export function DownloadForm() {
 
       if (response.code === 'ERROR') {
         toast.error(response.message)
+        setIsDownloading(false)
         return
       }
 
@@ -74,6 +76,7 @@ export function DownloadForm() {
       form.setFieldValue('url', '')
       setProgress(null)
       setIsDownloading(false)
+      queryClient.invalidateQueries({ queryKey: ['playlist', value.playlistName] })
     }
   })
 
@@ -94,15 +97,8 @@ export function DownloadForm() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 gap-4">
-            {progress && isDownloading && (
-              <div className="col-span-2 mb-2 space-y-2 rounded-md bg-accent p-4">
-                <div className="flex items-center justify-between text-xs font-medium">
-                  <span>Downloading…</span>
-                  <span>{progress.percentage.toFixed(0)}%</span>
-                </div>
-                <Progress value={progress.percentage} />
-              </div>
-            )}
+            <DownloadInfo />
+
             <FieldGroup className="col-span-2">
               <form.Field name="url">
                 {(field) => {
@@ -128,6 +124,7 @@ export function DownloadForm() {
                 }}
               </form.Field>
             </FieldGroup>
+
             <FieldGroup>
               <form.Field name="playlistName">
                 {(field) => {
@@ -159,6 +156,7 @@ export function DownloadForm() {
                 }}
               </form.Field>
             </FieldGroup>
+
             <FieldGroup>
               <form.Field name="downloadOption">
                 {(field) => {
