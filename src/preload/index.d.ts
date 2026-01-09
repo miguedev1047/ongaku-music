@@ -6,7 +6,7 @@ import type {
   WatchPlaylistModel,
   DownloadSongModel,
   ResponseModel
-} from '../../shared/models'
+} from '../shared/models'
 import type { ElectronAPI } from '@electron-toolkit/preload'
 import type { VideoProgress } from 'ytdlp-nodejs'
 
