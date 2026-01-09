@@ -37,13 +37,6 @@ export function DownloadForm() {
 
   const { data: playlists } = useSuspenseQuery(playlistQueryOpts)
 
-  // useEffect(() => {
-  //   const unsuscribe = window.api.onDownloadProgress((progress) => {
-  //     setProgress(progress)
-  //   })
-  //   return unsuscribe
-  // }, [])
-
   const form = useForm({
     defaultValues: {
       url: '',
