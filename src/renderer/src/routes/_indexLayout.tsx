@@ -5,6 +5,7 @@ import { AppHeader, AppSidebarLeft, AppSidebarRight } from '@/components/app-sid
 import { Spinner } from '@/components/ui/spinner'
 import { playlistQueryOpts } from '@/queries/playlists-queries'
 import { MediaPlayer } from '@/components/media-player/media-player'
+import { useDownloadProgressListener } from '@/hooks/use-download-progress-listener'
 
 export const Route = createFileRoute('/_indexLayout')({
   component: RouteComponent,
@@ -32,6 +33,7 @@ export const Route = createFileRoute('/_indexLayout')({
 })
 
 function RouteComponent() {
+  useDownloadProgressListener()
   return (
     <SidebarProvider
       style={
