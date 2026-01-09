@@ -25,5 +25,6 @@ export const PRIVILEGES = {
 export const RESERVED = ['CON', 'PRN', 'AUX', 'NUL', 'COM1', 'LPT1', '.', '..']
 
 // Bin Paths
-export const YT_BIN_PATH = '/usr/bin/yt-dlp'
-export const FFMPEG_BIN_PATH = '/usr/bin/ffmpeg'
+// TODO: REFACTOR THIS FOR DETECTION
+export const YT_BIN_PATH = '/usr/local/bin/yt-dlp'
+export const FFMPEG_BIN_PATH = '/usr/local/bin/ffmpeg'
