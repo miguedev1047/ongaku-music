@@ -1,18 +1,37 @@
 import type { DownloadSongModel, ResponseModel } from '../../shared/models'
-import { PLAYLIST_DIR, YT_BIN_PATH, FFMPEG_BIN_PATH } from '../../shared/constants'
-import { join, resolve } from 'node:path'
+import { PLAYLIST_DIR } from '../../shared/constants'
+import { join } from 'node:path'
 import { YtDlp } from 'ytdlp-nodejs'
 import { BrowserWindow } from 'electron'
+import { detectBinary } from '../utils/detect-bin'
 
-const ytdlp = new YtDlp({
-  binaryPath: resolve(YT_BIN_PATH),
-  ffmpegPath: resolve(FFMPEG_BIN_PATH)
-})
+let ytdlpInstance: YtDlp | null = null
+
+export function getYtDlp() {
+  if (ytdlpInstance) return ytdlpInstance
+
+  const binaryPath = detectBinary('yt-dlp')
+  const ffmpegPath = detectBinary('ffmpeg')
+
+  if (!binaryPath || !ffmpegPath) return null
+
+  ytdlpInstance = new YtDlp({ binaryPath, ffmpegPath })
+  return ytdlpInstance
+}
 
 export async function downloadSong(props: DownloadSongModel): Promise<ResponseModel> {
   const { playlistName, songUrl } = props
 
-  const win = BrowserWindow.getFocusedWindow()!
+  const ytdlp = getYtDlp()
+
+  if (!ytdlp) {
+    return {
+      code: 'ERROR',
+      message: 'You must installed the binaries'
+    }
+  }
+
+  const win = BrowserWindow.getAllWindows()[0]
   const playlistPath = join(PLAYLIST_DIR, playlistName)
 
   try {

@@ -25,6 +25,4 @@ export const PRIVILEGES = {
 export const RESERVED = ['CON', 'PRN', 'AUX', 'NUL', 'COM1', 'LPT1', '.', '..']
 
 // Bin Paths
-// TODO: REFACTOR THIS FOR DETECTION
-export const YT_BIN_PATH = '/usr/local/bin/yt-dlp'
-export const FFMPEG_BIN_PATH = '/usr/local/bin/ffmpeg'
+export const COMMON_PATHS = ['/usr/bin', '/usr/local/bin', '/bin', '/snap/bin']
