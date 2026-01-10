@@ -1,22 +1,15 @@
-import { useSearchStore } from '@/stores/search-store'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { playlistQueryOpts } from '@/queries/playlists-queries'
-import { useNavigate } from '@tanstack/react-router'
 import { SearchDialog, SearchDialogItem } from '@/components/ui/search-dialog'
-import { PlaylistModel } from '@shared/models'
+import { useSearchPlaylist } from '@/hooks/use-search-modals'
+import { useKeyboardShortcut } from '@/hooks/use-keyboard-shortcut'
 
 export function SearchPlaylist() {
-  const playlistsModalOpen = useSearchStore((state) => state.playlistsModalOpen)
-  const togglePlaylistModal = useSearchStore((state) => state.togglePlaylistModal)
+  const { playlistsModalOpen, togglePlaylistModal, handleOnSelect } = useSearchPlaylist()
 
   const { data } = useSuspenseQuery(playlistQueryOpts)
 
-  const navigate = useNavigate()
-
-  const handleOnSelect = (playlist: PlaylistModel) => {
-    navigate({ to: '/playlist/$title', params: { title: playlist.title } })
-    togglePlaylistModal()
-  }
+  useKeyboardShortcut({ combo: { code: 'KeyP', ctrl: true }, handler: togglePlaylistModal })
 
   return (
     <SearchDialog
@@ -24,7 +17,7 @@ export function SearchPlaylist() {
       onOpenChange={togglePlaylistModal}
       title="Search playlist..."
       description="Search a playlist folder"
-      heading="Playlists - Songs  "
+      heading="Playlists - Songs"
       placeholder="Type a playlist name..."
       items={data}
       getKey={(p) => p.title}

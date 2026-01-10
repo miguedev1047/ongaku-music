@@ -1,38 +1,19 @@
-import { useSearchStore } from '@/stores/search-store'
-import { useMediaStore } from '@/stores/media-store'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { playlistSongsQueryOpts } from '@/queries/playlists-queries'
 import { SearchDialog, SearchDialogItem } from '@/components/ui/search-dialog'
-import { SongModel } from '@shared/models'
 import { Button } from '@/components/ui/button'
 import { Kbd } from '@/components/ui/kbd'
 import { Item, ItemContent, ItemMedia, ItemTitle } from '@/components/ui/item'
 import { DEFAULT_URL_IMG } from '@/constants/general'
-import { useLocation } from '@tanstack/react-router'
 import { useKeyboardShortcut } from '@/hooks/use-keyboard-shortcut'
-import { useRecentSongsStore } from '@/stores/recent-songs-store'
+import { useSearchSong } from '@/hooks/use-search-modals'
 
 export function SearchSong() {
-  const playlist = useMediaStore((state) => state.playlist)
-  const setSong = useMediaStore((state) => state.setSong)
-  const songsModalOpen = useSearchStore((state) => state.songsModalOpen)
-  const toggleSongModal = useSearchStore((state) => state.toggleSongModal)
-  const setPlaylist = useMediaStore((state) => state.setPlaylist)
-  const pushRecentSong = useRecentSongsStore((state) => state.pushRecentSong)
-
-  const { pathname } = useLocation()
-  const currentPlaylist = pathname.split('/')[2] || playlist
+  const { songsModalOpen, currentPlaylist, toggleSongModal, handleOnSelect } = useSearchSong()
 
   const { data } = useSuspenseQuery(playlistSongsQueryOpts(currentPlaylist))
 
   useKeyboardShortcut({ combo: { code: 'KeyK', ctrl: true }, handler: toggleSongModal })
-
-  const handleOnSelect = (song: SongModel) => {
-    toggleSongModal()
-    setSong(song)
-    pushRecentSong(song)
-    setPlaylist(song.playlist)
-  }
 
   return (
     <>
