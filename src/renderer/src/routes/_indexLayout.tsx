@@ -47,7 +47,7 @@ function RouteComponent() {
       <AppSidebarLeft />
       <SidebarInset>
         <AppHeader />
-        <main className="flex flex-1 flex-col p-4 container mx-auto">
+        <main className="flex flex-1 flex-col p-4 max-w-280 w-full mx-auto @container/main">
           <Outlet />
         </main>
       </SidebarInset>
