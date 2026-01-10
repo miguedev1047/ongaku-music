@@ -10,6 +10,7 @@ import { Item, ItemContent, ItemMedia, ItemTitle } from '@/components/ui/item'
 import { DEFAULT_URL_IMG } from '@/constants/general'
 import { useLocation } from '@tanstack/react-router'
 import { useKeyboardShortcut } from '@/hooks/use-keyboard-shortcut'
+import { useRecentSongsStore } from '@/stores/recent-songs-store'
 
 export function SearchSong() {
   const playlist = useMediaStore((state) => state.playlist)
@@ -17,17 +18,19 @@ export function SearchSong() {
   const songsModalOpen = useSearchStore((state) => state.songsModalOpen)
   const toggleSongModal = useSearchStore((state) => state.toggleSongModal)
   const setPlaylist = useMediaStore((state) => state.setPlaylist)
+  const pushRecentSong = useRecentSongsStore((state) => state.pushRecentSong)
 
   const { pathname } = useLocation()
   const currentPlaylist = pathname.split('/')[2] || playlist
 
   const { data } = useSuspenseQuery(playlistSongsQueryOpts(currentPlaylist))
 
-  useKeyboardShortcut({ combo: { code: 'k', ctrl: true }, handler: toggleSongModal })
+  useKeyboardShortcut({ combo: { code: 'KeyK', ctrl: true }, handler: toggleSongModal })
 
   const handleOnSelect = (song: SongModel) => {
     toggleSongModal()
     setSong(song)
+    pushRecentSong(song)
     setPlaylist(song.playlist)
   }
 

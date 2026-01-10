@@ -3,17 +3,18 @@ import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '@/comp
 import { formatTime } from '@/helpers/format-time'
 import { DEFAULT_URL_IMG } from '@/constants/general'
 import { useMediaStore } from '@/stores/media-store'
+import { useRecentSongsStore } from '@/stores/recent-songs-store'
 
 export function SongItem(props: SongModel) {
   const { title, picture, album, artist, duration } = props
-
   const isActive = useMediaStore((state) => state.songTitle() === title)
-
   const setSong = useMediaStore((state) => state.setSong)
   const setPlaylist = useMediaStore((state) => state.setPlaylist)
+  const pushRecentSong = useRecentSongsStore((state) => state.pushRecentSong)
 
   const handlePlaySong = () => {
     setSong(props)
+    pushRecentSong(props)
     setPlaylist(props.playlist)
   }
 

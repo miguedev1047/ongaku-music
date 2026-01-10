@@ -3,6 +3,7 @@ import { useMediaStore } from '@/stores/media-store'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useKeyboardShortcut } from '@/hooks/use-keyboard-shortcut'
 import { useEffect } from 'react'
+import { useRecentSongsStore } from '@/stores/recent-songs-store'
 
 type MediaEvent = React.SyntheticEvent<HTMLAudioElement>
 
@@ -56,6 +57,7 @@ export function useMediaNextSong() {
   const playlist = useMediaStore((state) => state.playlist)
   const setSong = useMediaStore((state) => state.setSong)
   const isShuffle = useMediaStore((state) => state.isShuffle)
+  const pushRecentSong = useRecentSongsStore((state) => state.pushRecentSong)
 
   const { data } = useSuspenseQuery(playlistSongsQueryOpts(playlist))
 
@@ -66,6 +68,7 @@ export function useMediaNextSong() {
       const randomIndex = Math.floor(Math.random() * data.length)
       const randomSong = data[randomIndex]
       setSong(randomSong)
+      pushRecentSong(randomSong)
       return
     }
 
@@ -74,6 +77,7 @@ export function useMediaNextSong() {
 
     const nextSong = data[nextIndex]
     setSong(nextSong)
+    pushRecentSong(nextSong)
   }
 
   return { currentSong, handleNextSong, isIdle }
@@ -85,6 +89,7 @@ export function useMediaPrevSong() {
   const playlist = useMediaStore((state) => state.playlist)
   const setSong = useMediaStore((state) => state.setSong)
   const isShuffle = useMediaStore((state) => state.isShuffle)
+  const pushRecentSong = useRecentSongsStore((state) => state.pushRecentSong)
 
   const { data } = useSuspenseQuery(playlistSongsQueryOpts(playlist))
 
@@ -95,6 +100,7 @@ export function useMediaPrevSong() {
       const randomIndex = Math.floor(Math.random() * data.length)
       const randomSong = data[randomIndex]
       setSong(randomSong)
+      pushRecentSong(randomSong)
       return
     }
 
@@ -103,6 +109,7 @@ export function useMediaPrevSong() {
     const prevSong = data[prevIndex]
 
     setSong(prevSong)
+    pushRecentSong(prevSong)
   }
 
   return { currentSong, handlePrevSong, isIdle }
