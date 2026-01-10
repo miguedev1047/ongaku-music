@@ -21,7 +21,6 @@ A modern desktop music player application built with Electron, React, and TypeSc
 - **TanStack Router** - Type-safe routing
 - **Zustand** - Client state management
 - **Radix UI + Base UI** - Accessible UI components
-- **GSAP + Motion** - Smooth animations
 - **Tailwind CSS** - Utility-first styling
 - **Hono** - Lightweight web server
 - **Zod** - Schema validation
