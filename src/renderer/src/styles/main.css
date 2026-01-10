@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -41,11 +42,11 @@
   --sidebar-border: oklch(0.82 0.02 240.77);
   --sidebar-ring: oklch(0.57 0.11 228.92);
 
-  --font-sans: 'Source Code Pro', 'Geist', 'Geist Fallback', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-serif: 'Source Serif 4', 'Geist', 'Geist Fallback', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
-  --font-mono: 'Source Code Pro', 'Geist Mono', 'Geist Mono Fallback', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-sans: "Roboto Mono", monospace, 'ui-system';
+  --font-serif: "Roboto Mono", monospace, 'ui-system';
+  --font-mono: "Roboto Mono", monospace, 'ui-system';
 
-  --radius: 0rem;
+  --radius: 1rem;
 
   --shadow-2xs: 0px 1px 2.5px 0px oklch(0.49 0.09 235.00 / 0.03);
   --shadow-xs: 0px 1px 2.5px 0px oklch(0.49 0.09 235.00 / 0.03);
