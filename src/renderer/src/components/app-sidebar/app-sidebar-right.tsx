@@ -1,9 +1,9 @@
 import { Sidebar, SidebarContent } from '@/components/ui/sidebar'
 import { useMediaStore } from '@/stores/media-store'
-import { DEFAULT_URL_IMG } from '@/constants/general'
 import { ScrollingWaveform } from '@/components/ui/waveform'
 import { cn } from '@/lib/utils'
 import { useSongDominantColor } from '@/hooks/use-song--dominant-color'
+import { CoverImage } from '@/components/shared/cover-image'
 
 export function AppSidebarRight() {
   const isIdle = useMediaStore((state) => state.state === 'idle')
@@ -42,9 +42,9 @@ export function SongInfo() {
     <div className="w-full h-full p-4 flex flex-col justify-between">
       <div className="space-y-3">
         <h2 className="uppercase text-lg font-semibold">{currentSong.playlist}</h2>
-        <figure className="aspect-square">
-          <img
-            src={currentSong.picture || DEFAULT_URL_IMG}
+        <figure className="aspect-square overflow-hidden rounded-lg">
+          <CoverImage
+            src={currentSong.picture}
             alt={currentSong.title}
             className="w-full h-full object-cover"
           />
