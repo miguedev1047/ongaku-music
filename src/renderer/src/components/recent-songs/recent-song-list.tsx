@@ -11,7 +11,7 @@ import { RecentSongItem } from '@/components/recent-songs/_index'
 import { ListMusic } from 'lucide-react'
 
 export function RecentSongsList() {
-  const recentSongs = useRecentSongsStore((state) => state.songs)
+  const recentSongs = useRecentSongsStore((state) => state.recentSongs)
 
   if (!recentSongs.length) {
     return (
