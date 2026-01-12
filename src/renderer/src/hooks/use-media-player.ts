@@ -2,10 +2,49 @@ import { playlistSongsQueryOpts } from '@/queries/playlists-queries'
 import { useMediaStore } from '@/stores/media-store'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useKeyboardShortcut } from '@/hooks/use-keyboard-shortcut'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRecentSongsStore } from '@/stores/recent-songs-store'
 
 type MediaEvent = React.SyntheticEvent<HTMLAudioElement>
+
+export function useMediaProgressbar() {
+  const [seekTime, setSeekTime] = useState(0)
+  const [isSeeking, setIsSeeking] = useState(false)
+
+  const mediaRef = useMediaStore((state) => state.ref)
+  const currentTime = useMediaStore((state) => state.currentTime)
+  const duration = useMediaStore((state) => state.duration)
+
+  const setCurrentTime = useMediaStore((state) => state.setCurrentTime)
+
+  useEffect(() => {
+    if (isSeeking) return
+    setSeekTime(currentTime)
+  }, [currentTime, isSeeking])
+
+  const onValueChange = (value: number[]) => {
+    if (!mediaRef) return
+    mediaRef.muted = true
+    setIsSeeking(true)
+    setSeekTime(value[0])
+  }
+
+  const handleValueCommit = (value: number[]) => {
+    if (!mediaRef) return
+    mediaRef.currentTime = value[0]
+    setCurrentTime(value[0])
+    setIsSeeking(false)
+    mediaRef.muted = false
+  }
+
+  return {
+    seekTime,
+    duration,
+    onValueChange,
+    handleValueCommit,
+    isDisabled: !mediaRef
+  }
+}
 
 export function useMediaLoop() {
   const mediaRef = useMediaStore((state) => state.ref)
