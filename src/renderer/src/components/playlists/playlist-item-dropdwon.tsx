@@ -10,6 +10,7 @@ import { useDialogActionStore } from '@/stores/dialog-action-store'
 import { PlaylistModel } from '@shared/models'
 import { Ellipsis, Folder, Pencil, Trash } from 'lucide-react'
 import { memo } from 'react'
+import { toast } from 'sonner'
 
 export const PlaylistItemDropdown = memo(PlaylistItemDropdownMemoized)
 
@@ -17,11 +18,17 @@ export function PlaylistItemDropdownMemoized(props: PlaylistModel) {
   const openDialog = useDialogActionStore((state) => state.openDialog)
   const setPlaylist = useDialogActionStore((state) => state.setPlaylist)
 
+  const isDefaultPlaylist = props.title === 'Default'
+
   const handleOpenFolder = async () => {
     await window.api.openFolderPlaylist(props.title)
   }
 
   const handleRemovePlaylist = () => {
+    if (isDefaultPlaylist) {
+      toast.error('You can"t remove the "Default" playlist')
+      return
+    }
     openDialog('remove')
     setPlaylist(props)
   }
@@ -49,7 +56,11 @@ export function PlaylistItemDropdownMemoized(props: PlaylistModel) {
           Rename
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleRemovePlaylist} variant="destructive">
+        <DropdownMenuItem
+          disabled={isDefaultPlaylist}
+          onClick={handleRemovePlaylist}
+          variant="destructive"
+        >
           <Trash />
           Remove
         </DropdownMenuItem>
