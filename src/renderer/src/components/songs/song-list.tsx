@@ -20,7 +20,7 @@ export function SongList() {
       )}
     >
       <VList className="space-y-2! no-scrollbar" data={data}>
-        {(item) => <SongItem {...item} />}
+        {(item) => <SongItem key={item.id} {...item} />}
       </VList>
     </div>
   )

@@ -34,6 +34,7 @@ export default defineConfig(
           argsIgnorePattern: '^_'
         }
       ],
+      'react-hooks/set-state-in-effect': 'off',
       'react-hooks/immutability': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
       'react-hooks/static-components': 'off',
