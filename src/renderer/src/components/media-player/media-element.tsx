@@ -1,8 +1,11 @@
 import { useMediaElement, useMediaShortcuts } from '@/hooks/use-media-player'
+import { useMediaSession } from '@/hooks/use-media-session'
 import { getAudioUrl } from '@shared/helpers'
 
 export function MediaElement() {
   useMediaShortcuts()
+
+  useMediaSession()
 
   const {
     currentSong,
