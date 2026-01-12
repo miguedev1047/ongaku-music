@@ -1,22 +1,26 @@
 import { ModeToggle } from '@/components/ui/mode-toggle'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
-import { useLocation } from '@tanstack/react-router'
+import { Link } from '@tanstack/react-router'
 import { SearchSong } from '@/components/searchs/_index'
 import { SearchSongSkeleton } from '@/components/skeletons'
 import { Suspense } from 'react'
+import { Button } from '@/components/ui/button'
+import { MusicIcon } from 'lucide-react'
 
 export function AppHeader() {
-  const location = useLocation()
-  const pathname = location.pathname.split('/')[2] || ''
-
   return (
     <header className="bg-background/20 backdrop-blur-lg flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
         <div className="flex flex-1 grow basis-0 items-center gap-1">
-          <SidebarTrigger className="-ml-1" />
+          <Button variant="ghost" asChild>
+            <Link to="/">
+              <MusicIcon />
+              Ongaku Music
+            </Link>
+          </Button>
           <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4" />
-          <h1 className="text-sm font-medium line-clamp-1">{pathname}</h1>
+          <SidebarTrigger className="-ml-1" />
         </div>
 
         <Suspense fallback={<SearchSongSkeleton />}>
