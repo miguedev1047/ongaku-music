@@ -1,9 +1,8 @@
 {
   "name": "ongaku-music",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-experimental.1",
   "description": "A lightweight desktop music player with playlist management and local audio playback",
   "main": "./out/main/index.js",
-  "type": "module",
   "author": {
     "name": "Miguel Angel",
     "email": "miguedev1047@gmail.com",
@@ -20,12 +19,17 @@
         "repo": "ongaku-music"
       }
     ],
+    "asar": true,
+    "asarUnpack": [
+      "**/node_modules/sharp/**/*",
+      "**/node_modules/@img/**/*"
+    ],
     "linux": {
       "target": [
         "AppImage",
         "deb"
       ],
-      "category": "Audio"
+      "category": "AudioVideo"
     }
   },
   "scripts": {
@@ -54,6 +58,8 @@
     "@base-ui/react": "^1.0.0",
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
+    "@elysiajs/cors": "^1.4.1",
+    "@elysiajs/node": "^1.4.3",
     "@gsap/react": "^2.1.2",
     "@hono/node-server": "^1.19.7",
     "@radix-ui/react-avatar": "^1.1.11",
@@ -69,6 +75,7 @@
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-switch": "^1.2.6",
     "@radix-ui/react-tooltip": "^1.2.8",
+    "@sinclair/typebox": "^0.34.47",
     "@tabler/icons-react": "^3.36.1",
     "@tanstack/devtools-vite": "^0.4.1",
     "@tanstack/react-devtools": "^0.9.1",
@@ -82,6 +89,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "electron-updater": "^6.3.9",
+    "elysia": "^1.4.21",
     "fs-extra": "^11.3.3",
     "gsap": "^3.13.0",
     "hono": "^4.11.3",
@@ -92,6 +100,7 @@
     "radix-ui": "^1.4.3",
     "react-scan": "^0.4.3",
     "react-use-measure": "^2.1.7",
+    "sharp": "^0.34.5",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "tailwind-scrollbar": "^4.0.2",
@@ -109,7 +118,7 @@
     "@electron-toolkit/tsconfig": "^2.0.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/router-plugin": "^1.145.7",
-    "@types/node": "^22.19.1",
+    "@types/node": "^25.0.6",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
@@ -123,7 +132,14 @@
     "extract-colors": "^4.2.1",
     "prettier": "^3.7.4",
     "react-fast-marquee": "^1.6.5",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vite": "^7.2.6"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron",
+      "esbuild"
+    ]
   }
 }
