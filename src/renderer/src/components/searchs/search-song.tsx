@@ -31,7 +31,7 @@ export function SearchSong() {
         onOpenChange={toggleSongModal}
         title="Search songs..."
         description="Search a song to play"
-        heading="All songs"
+        heading={`All songs - ${currentPlaylist}`}
         placeholder="Type a song name..."
         items={data}
         getKey={(s) => s.title}
