@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
-@import "tailwindcss";
-@import "tw-animate-css";
-
 @plugin 'tailwind-scrollbar' {
     nocompatible: true;
     preferredStrategy: 'pseudoelements';
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -46,7 +46,7 @@
   --font-serif: "Roboto Mono", monospace, 'ui-system';
   --font-mono: "Roboto Mono", monospace, 'ui-system';
 
-  --radius: 1rem;
+  --radius: 0rem;
 
   --shadow-2xs: 0px 1px 2.5px 0px oklch(0.49 0.09 235.00 / 0.03);
   --shadow-xs: 0px 1px 2.5px 0px oklch(0.49 0.09 235.00 / 0.03);
