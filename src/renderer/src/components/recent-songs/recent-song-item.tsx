@@ -16,7 +16,7 @@ interface RecentSongItemProps {
 }
 
 export function RecentSongItem({ index, song }: RecentSongItemProps) {
-  const { title, picture, artist, playlist } = song
+  const { title, picture, metadata, playlist } = song
 
   const isActive = useMediaStore((state) => state.songTitle() === title)
   const setSong = useMediaStore((state) => state.setSong)
@@ -59,7 +59,9 @@ export function RecentSongItem({ index, song }: RecentSongItemProps) {
 
       <div className="space-y-0.5">
         <Marquee className="text-sm font-semibold">{title}</Marquee>
-        <p className="truncate text-xs text-muted-foreground">{artist || 'Unknown artist'}</p>
+        <p className="truncate text-xs text-muted-foreground">
+          {metadata?.artist || 'Unknown artist'}
+        </p>
       </div>
     </li>
   )

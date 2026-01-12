@@ -18,7 +18,7 @@ export function PlaylistItemDropdownMemoized(props: PlaylistModel) {
   const setPlaylist = useDialogActionStore((state) => state.setPlaylist)
 
   const handleOpenFolder = async () => {
-    await window.api.openFolderPlaylist(props.playlist)
+    await window.api.openFolderPlaylist(props.title)
   }
 
   const handleRemovePlaylist = () => {
