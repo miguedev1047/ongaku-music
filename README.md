@@ -22,7 +22,7 @@ A modern desktop music player application built with Electron, React, and TypeSc
 - **Zustand** - Client state management
 - **Radix UI + Base UI** - Accessible UI components
 - **Tailwind CSS** - Utility-first styling
-- **Hono** - Lightweight web server
+- **Elysia** - Lightweight type safe web server
 - **Zod** - Schema validation
 
 ## Project Structure
@@ -32,7 +32,7 @@ src/
 ├── main/           # Electron main process
 ├── renderer/       # React application (frontend)
 ├── preload/        # Preload scripts
-├── server/         # Hono local server
+├── server/         # Elysia local server
 └── shared/         # Shared types, models, and schemas
 ```
 
