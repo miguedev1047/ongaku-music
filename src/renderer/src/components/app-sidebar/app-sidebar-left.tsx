@@ -23,7 +23,7 @@ export function AppSidebarLeft() {
       <Sidebar
         data-idle={isIdle}
         className={cn(
-          'data-[idle=false]:h-[calc(100%-var(--footer-height))] data-data-[idle=true]:h-full'
+          'top-(--header-height) data-[idle=false]:h-[calc(100%-var(--footer-height)-3.5rem)] data-[idle=true]:h-[calc(100%-3.5rem)]'
         )}
       >
         <SidebarHeader>

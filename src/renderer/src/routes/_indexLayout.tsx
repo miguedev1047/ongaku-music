@@ -35,24 +35,28 @@ export const Route = createFileRoute('/_indexLayout')({
 function RouteComponent() {
   useDownloadProgressListener()
   return (
-    <SidebarProvider
-      style={
-        {
-          '--sidebar-width': 'calc(var(--spacing) * 72)',
-          '--header-height': 'calc(var(--spacing) * 12)',
-          '--footer-height': 'calc(var(--spacing) * 25)'
-        } as React.CSSProperties
-      }
-    >
-      <AppSidebarLeft />
-      <SidebarInset>
+    <div className="[--header-height:calc(--spacing(14))]">
+      <SidebarProvider
+        style={
+          {
+            '--sidebar-width': 'calc(var(--spacing) * 72)',
+            '--footer-height': 'calc(var(--spacing) * 25)'
+          } as React.CSSProperties
+        }
+        className="flex flex-col"
+      >
         <AppHeader />
-        <main className="flex flex-1 flex-col p-4 max-w-280 w-full mx-auto @container/main">
-          <Outlet />
-        </main>
-      </SidebarInset>
-      <AppSidebarRight />
-      <MediaPlayer />
-    </SidebarProvider>
+        <div className="flex flex-1">
+          <AppSidebarLeft />
+          <SidebarInset>
+            <main className="flex flex-1 flex-col p-4 max-w-280 w-full mx-auto @container/main">
+              <Outlet />
+            </main>
+          </SidebarInset>
+          <AppSidebarRight />
+        </div>
+        <MediaPlayer />
+      </SidebarProvider>
+    </div>
   )
 }

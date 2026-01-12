@@ -21,7 +21,7 @@ export function AppSidebarRight() {
       className={cn(
         'transition-colors duration-200',
         'sticky top-0 hidden border-l lg:flex',
-        'data-[idle=false]:h-[calc(100vh-var(--footer-height))] data-[idle=true]:h-svh'
+        'data-[idle=false]:h-[calc(100svh-var(--footer-height)-3.5rem)] data-[idle=true]:h-[calc(100%-3.5rem)]'
       )}
       style={{
         background: color ? `rgb(${color.red}, ${color.green}, ${color.blue}, 0.1)` : undefined

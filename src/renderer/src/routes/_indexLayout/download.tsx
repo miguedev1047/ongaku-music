@@ -1,5 +1,5 @@
 import { DownloadForm } from '@/components/forms/download-form'
-import { SectionContainer } from '@/components/shared/secition-container'
+import { SectionContainer } from '@/components/shared/section-container'
 import { DownloadFormSkeleton } from '@/components/skeletons'
 import { createFileRoute } from '@tanstack/react-router'
 import { Suspense } from 'react'

@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { RecentSongsList } from '@/components/recent-songs/recent-song-list'
-import { SectionContainer } from '@/components/shared/secition-container'
+import { SectionContainer } from '@/components/shared/section-container'
 import { DownloadInfo } from '@/components/shared/download-info'
 import { QuickActionList } from '@/components/quick-actions/quick-action-list'
 
