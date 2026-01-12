@@ -1,5 +1,5 @@
 import type { DownloadSongModel, ResponseModel } from '../../shared/models'
-import { PLAYLIST_DIR } from '../../shared/constants'
+import { PLAYLIST_DIR } from '../../shared/directories'
 import { join } from 'node:path'
 import { YtDlp } from 'ytdlp-nodejs'
 import { BrowserWindow } from 'electron'

@@ -4,9 +4,9 @@ import { SearchDialog, SearchDialogItem } from '@/components/ui/search-dialog'
 import { Button } from '@/components/ui/button'
 import { Kbd } from '@/components/ui/kbd'
 import { Item, ItemContent, ItemMedia, ItemTitle } from '@/components/ui/item'
-import { DEFAULT_URL_IMG } from '@/constants/general'
 import { useKeyboardShortcut } from '@/hooks/use-keyboard-shortcut'
 import { useSearchSong } from '@/hooks/use-search-modals'
+import { CoverImage } from '../shared/cover-image'
 
 export function SearchSong() {
   const { songsModalOpen, currentPlaylist, toggleSongModal, handleOnSelect } = useSearchSong()
@@ -40,8 +40,8 @@ export function SearchSong() {
           <SearchDialogItem key={song.title} onSelect={onSelect} className="p-0! h-12">
             <Item className="p-1!">
               <ItemMedia variant="image-sm">
-                <img
-                  src={song.picture || DEFAULT_URL_IMG}
+                <CoverImage
+                  src={song.picture}
                   alt={song.title}
                   width={64}
                   height={64}

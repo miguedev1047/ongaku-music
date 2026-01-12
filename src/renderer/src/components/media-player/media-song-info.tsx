@@ -1,7 +1,7 @@
-import { DEFAULT_URL_IMG } from '@/constants/general'
 import { ItemMedia, Item, ItemContent, ItemTitle, ItemDescription } from '@/components/ui/item'
 import { useMediaStore } from '@/stores/media-store'
 import { CoverImage } from '@/components/shared/cover-image'
+import { DEFAULT_URL_IMG } from '@shared/constants'
 
 export function MediaSongInfo() {
   const mediaSongInfo = useMediaStore((state) => state.currentSong)
@@ -16,7 +16,9 @@ export function MediaSongInfo() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle className="line-clamp-1">{mediaSongInfo.title}</ItemTitle>
-          <ItemDescription className="line-clamp-1">{mediaSongInfo.artist}</ItemDescription>
+          <ItemDescription className="line-clamp-1">
+            {mediaSongInfo.metadata?.artist}
+          </ItemDescription>
         </ItemContent>
       </Item>
     </div>

@@ -10,12 +10,12 @@ export function useQuickActions() {
 
   const quickActions = [
     {
-      title: 'Search playlists',
+      title: 'Playlists',
       icon: ListMusic,
       onAction: () => togglePlaylistModal()
     },
     {
-      title: 'Search songs',
+      title: 'Songs',
       icon: MusicIcon,
       onAction: () => toggleSongModal()
     },

@@ -1,7 +1,7 @@
 import type { SongModel } from '@shared/models'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { DEFAULT_URL_IMG } from '@/constants/general'
+import { DEFAULT_URL_IMG } from '@shared/constants'
 
 type StateType = 'loaded' | 'error' | 'idle'
 
@@ -34,7 +34,7 @@ interface MediaState {
   setVolumen: (vol: number) => void
   setPlaylist: (value: string) => void
   setCurrentTime: (value: number) => void
-  setMediaRef: (value: HTMLAudioElement) => void
+  setMediaRef: (value: HTMLAudioElement | null) => void
   setDuration: (value: number) => void
   setShuffle: (value: boolean) => void
   toggleShuffle: () => void
@@ -59,8 +59,14 @@ export const useMediaStore = create<MediaState>()(
       ref: null,
 
       // Getters
-      audioSrc: () => get().currentSong?.src,
-      songPicture: () => get().currentSong?.picture || DEFAULT_URL_IMG,
+      audioSrc: () => {
+        const state = get()
+        return state.currentSong?.audioUrl
+      },
+      songPicture: () => {
+        const state = get()
+        return state.currentSong?.picture || DEFAULT_URL_IMG
+      },
       songPlaylist: () => get().currentSong?.playlist || 'Default',
       songTitle: () => get().currentSong?.title || 'None',
 

@@ -1,4 +1,5 @@
 import { useMediaElement, useMediaShortcuts } from '@/hooks/use-media-player'
+import { getAudioUrl } from '@shared/helpers'
 
 export function MediaElement() {
   useMediaShortcuts()
@@ -18,7 +19,7 @@ export function MediaElement() {
   return (
     <audio
       ref={(el) => setMediaRef(el as HTMLAudioElement)}
-      src={currentSong.src}
+      src={getAudioUrl(currentSong.path)}
       className="sr-only"
       onLoadedMetadata={handleLoadedMetadata}
       onPlay={handleLoad}

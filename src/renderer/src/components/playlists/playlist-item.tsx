@@ -12,6 +12,7 @@ export function PlaylistItem(props: PlaylistModel) {
         <Link
           activeProps={{ className: 'bg-sidebar-accent' }}
           to="/playlist/$title"
+          preload="intent"
           params={{ title }}
         >
           <ListMusic />

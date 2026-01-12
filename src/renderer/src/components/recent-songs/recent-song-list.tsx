@@ -36,7 +36,7 @@ export function RecentSongsList() {
   return (
     <ul className="grid grid-cols-2 @sm/main:grid-cols-3 @md/main:grid-cols-5 gap-4">
       {recentSongs.map((item, index) => (
-        <RecentSongItem index={index} song={item} key={item.filename} />
+        <RecentSongItem index={index} song={item} key={item.id} />
       ))}
     </ul>
   )

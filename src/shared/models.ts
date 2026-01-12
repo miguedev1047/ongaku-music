@@ -17,22 +17,24 @@ export interface SongListModel {
 }
 
 export interface PlaylistModel {
+  id: string
   title: string
-  playlist: string
+  path: string
+  birthdate: string
+  filename: string
   totalSongs: number
-  birthtime: Date
+  isDirectory: boolean
 }
 
 export interface SongModel {
+  id: string
   title: string
-  filename: string
-  src: string
-  artist: string
+  path: string
   playlist: string
-  album: string
   picture: string | null
+  audioUrl: string
   extension: string
-  duration: number
+  metadata: SongMetadataModel | null
   birthtime: Date
 }
 
@@ -44,7 +46,7 @@ export interface RemovePlaylistModel {
 export interface GetSongImageModel {
   base64String: string
   format: string
-  title: string
+  id: string
 }
 
 export interface SongListModel {
@@ -57,22 +59,25 @@ export interface SongListModel {
 }
 
 export interface GetSongsByPlaylistModel {
+  id: string
   title: string
-  filename: string
-  src: string
+  path: string
+  playlist: string
   picture: string | null
-  artist: string
+  audioUrl: string
   extension: string
-  album: string
-  duration: number
+  metadata: SongMetadataModel | null
   birthtime: Date
 }
 
 export interface GetPlayListPathModel {
+  id: string
   title: string
-  playlist: string
+  path: string
+  birthdate: string
+  filename: string
   totalSongs: number
-  birthtime: Date
+  isDirectory: boolean
 }
 
 export interface DownloadSongModel {
@@ -93,4 +98,10 @@ export interface NotifyChangeModel {
 export interface DownloadSongProgressModel {
   progress: VideoProgress
   info: VideoInfo | PlaylistInfo
+}
+
+export interface SongMetadataModel {
+  artist: string
+  album: string
+  duration: number
 }

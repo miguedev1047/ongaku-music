@@ -4,6 +4,7 @@ import { ScrollingWaveform } from '@/components/ui/waveform'
 import { cn } from '@/lib/utils'
 import { useSongDominantColor } from '@/hooks/use-song--dominant-color'
 import { CoverImage } from '@/components/shared/cover-image'
+import Marquee from 'react-fast-marquee'
 
 export function AppSidebarRight() {
   const isIdle = useMediaStore((state) => state.state === 'idle')
@@ -50,10 +51,12 @@ export function SongInfo() {
           />
         </figure>
         <div>
-          <h2 className="text-xl text-balance font-semibold mt-2 line-clamp-1">
+          <Marquee className="text-xl text-balance font-semibold mt-2 line-clamp-1">
             {currentSong.title}
-          </h2>
-          <p className="text-sm text-muted-foreground line-clamp-1">{currentSong.artist}</p>
+          </Marquee>
+          <Marquee className="text-sm text-muted-foreground line-clamp-1">
+            {currentSong.metadata?.artist}
+          </Marquee>
         </div>
       </div>
 

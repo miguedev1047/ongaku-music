@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { RecentSongsList } from '@/components/recent-songs/recent-song-list'
 import { SectionContainer } from '@/components/shared/secition-container'
 import { DownloadInfo } from '@/components/shared/download-info'
-import { QuickActionList } from '@/components/quick-actions/quieck-action-list'
+import { QuickActionList } from '@/components/quick-actions/quick-action-list'
 
 export const Route = createFileRoute('/_indexLayout/')({
   component: Index
@@ -10,7 +10,7 @@ export const Route = createFileRoute('/_indexLayout/')({
 
 function Index() {
   return (
-    <SectionContainer>
+    <SectionContainer className="mb-8">
       <DownloadInfo />
 
       <div className="space-y-4">

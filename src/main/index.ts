@@ -1,5 +1,6 @@
+import icon from '../../resources/icon.png?asset'
 import type {
-  GetSong,
+  // GetSong,
   GetSongsByPlaylist,
   NewPlaylist,
   OpenFolderPlaylist,
@@ -7,44 +8,50 @@ import type {
   RenamePlaylist,
   DownloadSong
 } from '../shared/types'
-
-import { app, BrowserWindow, ipcMain, protocol, shell } from 'electron'
+import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
-import path, { join } from 'node:path'
-
-import { picturePath, songPath } from './utils/local-resource'
-import {
-  getPlaylists,
-  getSongsByPlaylist,
-  newPlaylist,
-  openFolderPlaylist,
-  removePlaylist,
-  renamePlaylist
-} from './lib/playlist-manager'
+import { join } from 'node:path'
+import { getPlaylistIpc } from './ipc/get-playlists'
+import { playlistOptionsIpc } from './ipc/playlist-opts'
+import { getSongsByPlaylistsIpc } from './ipc/get-songs-by-playlist'
 import { downloadSong } from './lib/downloader-core'
-import { getSongByFilename } from './lib/song-manager'
-import { PRIVILEGES } from '../shared/constants'
-import { startMediaServer } from '../server'
+import { startMediaServer } from '../server/root'
 import { setupAutoUpdater } from './updater'
 
-// Create a protocol handler
-protocol.registerSchemesAsPrivileged([
-  { scheme: 'song-path', privileges: PRIVILEGES },
-  { scheme: 'picture-path', privileges: PRIVILEGES }
-])
+startMediaServer()
 
-const createWindow = () => {
+let mainWindow: BrowserWindow | null = null
+
+function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 640,
+  mainWindow = new BrowserWindow({
+    width: 1280,
+    height: 720,
     show: false,
-    backgroundColor: '#000',
     autoHideMenuBar: true,
+    ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
-      preload: path.join(import.meta.dirname, '../preload/index.mjs'),
-      sandbox: false
+      preload: join(__dirname, '../preload/index.js'),
+      sandbox: false,
+      nodeIntegration: false
     }
+  })
+
+  const gotTheLock = app.requestSingleInstanceLock()
+
+  if (!gotTheLock) {
+    app.quit()
+  } else {
+    app.on('second-instance', () => {
+      if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore()
+        mainWindow.focus()
+      }
+    })
+  }
+
+  mainWindow.on('ready-to-show', () => {
+    mainWindow?.show()
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -54,18 +61,13 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+    mainWindow.webContents.openDevTools()
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
 
-  mainWindow.webContents.openDevTools()
-
-  mainWindow.on('ready-to-show', () => {
-    setTimeout(() => mainWindow.show(), 500)
-  })
-
-  setupAutoUpdater(mainWindow)
+  // setupAutoUpdater(mainWindow)
 }
 
 // This method will be called when Electron has finished
@@ -84,38 +86,32 @@ app.whenReady().then(() => {
 
   ipcMain.handle('ping', () => console.log('Pong!'))
 
-  ipcMain.handle('get-playlists', () => getPlaylists())
+  ipcMain.handle('get-playlists', () => getPlaylistIpc.get())
   ipcMain.handle('get-songs-by-playlist', (_event, ...args: Parameters<GetSongsByPlaylist>) =>
-    getSongsByPlaylist(...args)
-  )
-  ipcMain.handle('get-song-by-filename', (_event, ...args: Parameters<GetSong>) =>
-    getSongByFilename(...args)
+    getSongsByPlaylistsIpc.get(...args)
   )
 
-  ipcMain.handle('new-playlist', (_event, ...args: Parameters<NewPlaylist>) => newPlaylist(...args))
+  ipcMain.handle('new-playlist', (_event, ...args: Parameters<NewPlaylist>) =>
+    playlistOptionsIpc.newPlaylist(...args)
+  )
   ipcMain.handle('remove-playlist', (_event, ...args: Parameters<RemovePlaylist>) =>
-    removePlaylist(...args)
+    playlistOptionsIpc.removePlaylist(...args)
   )
   ipcMain.handle('rename-playlist', (_event, ...args: Parameters<RenamePlaylist>) =>
-    renamePlaylist(...args)
+    playlistOptionsIpc.renamePlaylist(...args)
   )
   ipcMain.handle('open-folder-playlist', (_event, ...args: Parameters<OpenFolderPlaylist>) =>
-    openFolderPlaylist(...args)
+    playlistOptionsIpc.openPlaylistFolder(...args)
   )
   ipcMain.handle('download-song', (_event, ...args: Parameters<DownloadSong>) =>
     downloadSong(...args)
   )
-  // ipcMain.on(
-  //   "start-watch-playlist",
-  //   (_event, ...args: Parameters<WatchPlaylist>) => watchPlaylist(...args)
-  // )
-
-  protocol.handle('song-path', songPath)
-  protocol.handle('picture-path', picturePath)
-
-  startMediaServer()
 
   createWindow()
+
+  if (mainWindow) {
+    setupAutoUpdater(mainWindow)
+  }
 
   app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the

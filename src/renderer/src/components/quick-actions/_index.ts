@@ -1,1 +1,1 @@
-export * from './quieck-action-list'
+export * from './quick-action-list'
