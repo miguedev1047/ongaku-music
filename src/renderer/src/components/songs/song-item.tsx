@@ -21,7 +21,7 @@ export function SongItem(props: SongModel) {
   return (
     <Item
       data-active={isActive}
-      className="relative bg-card mb-1.5 cursor-pointer data-[active=true]:bg-accent hover:bg-accent/80 transition-colors"
+      className="relative bg-card mb-1.5 cursor-pointer data-[active=true]:bg-accent hover:bg-accent/80 transition-colors group/title"
       onClick={handlePlaySong}
       role="button"
     >
@@ -37,7 +37,13 @@ export function SongItem(props: SongModel) {
       </ItemMedia>
       <ItemContent>
         <ItemTitle className="line-clamp-1">
-          {title} - <span className="text-muted-foreground">{metadata?.album}</span>
+          <span
+            data-active={isActive}
+            className="data-[active=true]:text-primary group-hover/title:text-primary  transition-colors"
+          >
+            {title}
+          </span>{' '}
+          - <span className="text-muted-foreground">{metadata?.album}</span>
         </ItemTitle>
         <ItemDescription className="line-clamp-1">{metadata?.artist}</ItemDescription>
       </ItemContent>
