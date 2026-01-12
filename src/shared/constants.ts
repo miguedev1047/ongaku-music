@@ -1,5 +1,5 @@
 // Backend url
-export const SERVER_PORT = 8080
+export const SERVER_PORT = 64200
 export const SERVER_HOST = `http://localhost:${SERVER_PORT}`
 
 // Frontend url
