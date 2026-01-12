@@ -34,6 +34,10 @@ export function PlaylistItemDropdownMemoized(props: PlaylistModel) {
   }
 
   const handleRenamePlaylist = () => {
+    if (isDefaultPlaylist) {
+      toast.error('You can"t rename the "Default" playlist')
+      return
+    }
     openDialog('rename')
     setPlaylist(props)
   }
@@ -51,7 +55,7 @@ export function PlaylistItemDropdownMemoized(props: PlaylistModel) {
           <Folder />
           Open
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleRenamePlaylist}>
+        <DropdownMenuItem disabled={isDefaultPlaylist} onClick={handleRenamePlaylist}>
           <Pencil />
           Rename
         </DropdownMenuItem>
