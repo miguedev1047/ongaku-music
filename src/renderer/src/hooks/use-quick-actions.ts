@@ -1,10 +1,9 @@
 import { useNavigate } from '@tanstack/react-router'
-import { useSearchPlaylist, useSearchSong } from './use-search-modals'
 import { DownloadCloudIcon, ListMusic, MusicIcon } from 'lucide-react'
+import { useDialogStore } from '@/stores/dialog-action-store'
 
 export function useQuickActions() {
-  const { toggleSongModal } = useSearchSong()
-  const { togglePlaylistModal } = useSearchPlaylist()
+  const open = useDialogStore((state) => state.open)
 
   const navigate = useNavigate()
 
@@ -12,12 +11,12 @@ export function useQuickActions() {
     {
       title: 'Playlists',
       icon: ListMusic,
-      onAction: () => togglePlaylistModal()
+      onAction: () => open('playlist', 'search', null)
     },
     {
       title: 'Songs',
       icon: MusicIcon,
-      onAction: () => toggleSongModal()
+      onAction: () => open('song', 'search', null)
     },
     {
       title: 'Downloads',
