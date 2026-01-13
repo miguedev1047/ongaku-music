@@ -7,7 +7,10 @@ import type {
   RemovePlaylist,
   RenamePlaylist,
   OpenFolderPlaylist,
-  DownloadSong
+  DownloadSong,
+  MoveSong,
+  RenameSong,
+  RemoveSong
 } from '../shared/types'
 
 import { contextBridge, ipcRenderer } from 'electron'
@@ -28,6 +31,10 @@ const api = {
     ipcRenderer.invoke('rename-playlist', ...args),
   openFolderPlaylist: (...args: Parameters<OpenFolderPlaylist>) =>
     ipcRenderer.invoke('open-folder-playlist', ...args),
+
+  moveSong: (...args: Parameters<MoveSong>) => ipcRenderer.invoke('move-song', ...args),
+  renameSong: (...args: Parameters<RenameSong>) => ipcRenderer.invoke('rename-song', ...args),
+  removeSong: (...args: Parameters<RemoveSong>) => ipcRenderer.invoke('remove-song', ...args),
 
   downloadSong: (...args: Parameters<DownloadSong>) => ipcRenderer.invoke('download-song', ...args),
   onDownloadProgress: (callback: (progress: VideoProgress) => void) => {
