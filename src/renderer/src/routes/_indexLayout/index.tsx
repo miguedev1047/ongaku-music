@@ -10,7 +10,7 @@ export const Route = createFileRoute('/_indexLayout/')({
 
 function Index() {
   return (
-    <SectionContainer className="mb-8">
+    <SectionContainer>
       <DownloadInfo />
 
       <div className="space-y-4">
