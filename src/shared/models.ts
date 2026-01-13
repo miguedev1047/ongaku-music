@@ -31,6 +31,7 @@ export interface SongModel {
   title: string
   path: string
   playlist: string
+  fileName: string
   picture: string | null
   audioUrl: string
   extension: string
@@ -41,6 +42,23 @@ export interface SongModel {
 export interface RemovePlaylistModel {
   newName: string
   oldName: string
+}
+
+export interface MoveSongModel {
+  fileSource: string
+  fileName: string
+  playlistName: string
+}
+
+export interface RenameSongModel {
+  oldName: string
+  newName: string
+  playlistName: string
+}
+
+export interface RemoveSongModel {
+  playlistName: string
+  songName: string
 }
 
 export interface GetSongImageModel {
@@ -62,6 +80,7 @@ export interface GetSongsByPlaylistModel {
   id: string
   title: string
   path: string
+  fileName: string
   playlist: string
   picture: string | null
   audioUrl: string
