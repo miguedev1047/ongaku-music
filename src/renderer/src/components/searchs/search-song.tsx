@@ -6,14 +6,12 @@ import { Kbd } from '@/components/ui/kbd'
 import { Item, ItemContent, ItemMedia, ItemTitle } from '@/components/ui/item'
 import { useKeyboardShortcut } from '@/hooks/use-keyboard-shortcut'
 import { useSearchSong } from '@/hooks/use-search-modals'
-import { CoverImage } from '../shared/cover-image'
+import { CoverImage } from '@/components/shared/cover-image'
 
 export function SearchSong() {
-  const { songsModalOpen, currentPlaylist, toggleSongModal, handleOnSelect } = useSearchSong()
-
+  const { isOpen, handleToggle, currentPlaylist, handleOnSelect } = useSearchSong()
   const { data } = useSuspenseQuery(playlistSongsQueryOpts(currentPlaylist))
-
-  useKeyboardShortcut({ combo: { code: 'KeyK', ctrl: true }, handler: toggleSongModal })
+  useKeyboardShortcut({ combo: { code: 'KeyK', ctrl: true }, handler: handleToggle })
 
   return (
     <>
@@ -21,14 +19,14 @@ export function SearchSong() {
         className="flex justify-between items-center max-w-80 w-full!"
         variant="outline"
         size="sm"
-        onClick={toggleSongModal}
+        onClick={handleToggle}
       >
         <span>Search songs...</span>
         <Kbd>Ctrl + K</Kbd>
       </Button>
       <SearchDialog
-        open={songsModalOpen}
-        onOpenChange={toggleSongModal}
+        open={isOpen}
+        onOpenChange={handleToggle}
         title="Search songs..."
         description="Search a song to play"
         heading={`All songs - ${currentPlaylist}`}

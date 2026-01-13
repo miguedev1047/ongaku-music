@@ -6,40 +6,29 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { SidebarMenuAction } from '@/components/ui/sidebar'
-import { useDialogActionStore } from '@/stores/dialog-action-store'
+import { useDialogStore } from '@/stores/dialog-action-store'
 import { PlaylistModel } from '@shared/models'
 import { Ellipsis, Folder, Pencil, Trash } from 'lucide-react'
 import { memo } from 'react'
-import { toast } from 'sonner'
-
-export const PlaylistItemDropdown = memo(PlaylistItemDropdownMemoized)
 
 export function PlaylistItemDropdownMemoized(props: PlaylistModel) {
-  const openDialog = useDialogActionStore((state) => state.openDialog)
-  const setPlaylist = useDialogActionStore((state) => state.setPlaylist)
+  const playlist = props
 
-  const isDefaultPlaylist = props.title === 'Default'
+  const open = useDialogStore((state) => state.open)
+  const isDefaultPlaylist = playlist.title === 'Default'
 
   const handleOpenFolder = async () => {
-    await window.api.openFolderPlaylist(props.title)
+    await window.api.openFolderPlaylist(playlist.title)
   }
 
   const handleRemovePlaylist = () => {
-    if (isDefaultPlaylist) {
-      toast.error('You can"t remove the "Default" playlist')
-      return
-    }
-    openDialog('remove')
-    setPlaylist(props)
+    if (isDefaultPlaylist) return
+    open('playlist', 'remove', { playlist })
   }
 
   const handleRenamePlaylist = () => {
-    if (isDefaultPlaylist) {
-      toast.error('You can"t rename the "Default" playlist')
-      return
-    }
-    openDialog('rename')
-    setPlaylist(props)
+    if (isDefaultPlaylist) return
+    open('playlist', 'rename', { playlist })
   }
 
   return (
@@ -72,3 +61,5 @@ export function PlaylistItemDropdownMemoized(props: PlaylistModel) {
     </DropdownMenu>
   )
 }
+
+export const PlaylistItemDropdown = memo(PlaylistItemDropdownMemoized)

@@ -5,16 +5,14 @@ import { useSearchPlaylist } from '@/hooks/use-search-modals'
 import { useKeyboardShortcut } from '@/hooks/use-keyboard-shortcut'
 
 export function SearchPlaylist() {
-  const { playlistsModalOpen, togglePlaylistModal, handleOnSelect } = useSearchPlaylist()
-
+  const { isOpen, handleToggle, handleOnSelect } = useSearchPlaylist()
   const { data } = useSuspenseQuery(playlistQueryOpts)
-
-  useKeyboardShortcut({ combo: { code: 'KeyP', ctrl: true }, handler: togglePlaylistModal })
+  useKeyboardShortcut({ combo: { code: 'KeyP', ctrl: true }, handler: handleToggle })
 
   return (
     <SearchDialog
-      open={playlistsModalOpen}
-      onOpenChange={togglePlaylistModal}
+      open={isOpen}
+      onOpenChange={handleToggle}
       title="Search playlist..."
       description="Search a playlist folder"
       heading="Playlists - Songs"

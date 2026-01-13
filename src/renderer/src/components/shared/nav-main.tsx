@@ -3,11 +3,11 @@ import { SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { SearchPlaylist } from '@/components/searchs/_index'
 
 export function NavMain() {
-  const { NAV_MAIN_ROUTES } = useNavMain()
+  const { navMainRoutes } = useNavMain()
 
   return (
     <>
-      {NAV_MAIN_ROUTES.map((item) => (
+      {navMainRoutes.map((item) => (
         <SidebarMenuItem key={item.title}>
           <SidebarMenuButton onClick={item.onAction}>
             <item.icon />
