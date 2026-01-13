@@ -6,17 +6,22 @@ import type {
   OpenFolderPlaylist,
   RemovePlaylist,
   RenamePlaylist,
-  DownloadSong
+  DownloadSong,
+  MoveSong,
+  RenameSong,
+  RemoveSong
 } from '../shared/types'
 import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { join } from 'node:path'
 import { getPlaylistIpc } from './ipc/get-playlists'
+import { songOptionsIpc } from './ipc/song-opts'
 import { playlistOptionsIpc } from './ipc/playlist-opts'
 import { getSongsByPlaylistsIpc } from './ipc/get-songs-by-playlist'
 import { downloadSong } from './lib/downloader-core'
 import { startMediaServer } from '../server/root'
 import { setupAutoUpdater } from './updater'
+import { preventMultiInstances } from './utils/prevent-multi-instances'
 
 startMediaServer()
 
@@ -37,18 +42,7 @@ function createWindow() {
     }
   })
 
-  const gotTheLock = app.requestSingleInstanceLock()
-
-  if (!gotTheLock) {
-    app.quit()
-  } else {
-    app.on('second-instance', () => {
-      if (mainWindow) {
-        if (mainWindow.isMinimized()) mainWindow.restore()
-        mainWindow.focus()
-      }
-    })
-  }
+  preventMultiInstances(mainWindow)
 
   mainWindow.on('ready-to-show', () => {
     mainWindow?.show()
@@ -66,8 +60,6 @@ function createWindow() {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
-
-  // setupAutoUpdater(mainWindow)
 }
 
 // This method will be called when Electron has finished
@@ -103,6 +95,17 @@ app.whenReady().then(() => {
   ipcMain.handle('open-folder-playlist', (_event, ...args: Parameters<OpenFolderPlaylist>) =>
     playlistOptionsIpc.openPlaylistFolder(...args)
   )
+
+  ipcMain.handle('move-song', (_event, ...args: Parameters<MoveSong>) =>
+    songOptionsIpc.moveSong(...args)
+  )
+  ipcMain.handle('rename-song', (_event, ...args: Parameters<RenameSong>) =>
+    songOptionsIpc.renameSong(...args)
+  )
+  ipcMain.handle('remove-song', (_event, ...args: Parameters<RemoveSong>) =>
+    songOptionsIpc.removeSong(...args)
+  )
+
   ipcMain.handle('download-song', (_event, ...args: Parameters<DownloadSong>) =>
     downloadSong(...args)
   )
