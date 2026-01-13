@@ -19,12 +19,12 @@ export function getYtDlp() {
   return ytdlpInstance
 }
 
+getYtDlp()
+
 export async function downloadSong(props: DownloadSongModel): Promise<ResponseModel> {
   const { playlistName, songUrl } = props
 
-  const ytdlp = getYtDlp()
-
-  if (!ytdlp) {
+  if (!ytdlpInstance) {
     return {
       code: 'ERROR',
       message: 'You must installed the binaries'
@@ -35,7 +35,7 @@ export async function downloadSong(props: DownloadSongModel): Promise<ResponseMo
   const playlistPath = join(PLAYLIST_DIR, playlistName)
 
   try {
-    const songInfo = await ytdlp.getInfoAsync(songUrl)
+    const songInfo = await ytdlpInstance.getInfoAsync(songUrl)
 
     if (!songInfo) {
       return {
@@ -44,7 +44,7 @@ export async function downloadSong(props: DownloadSongModel): Promise<ResponseMo
       }
     }
 
-    await ytdlp.downloadAsync(songUrl, {
+    await ytdlpInstance.downloadAsync(songUrl, {
       onProgress: (progress) => {
         const info = { progress: progress, info: songInfo }
         win.webContents.send('on-download-progress-song', info)
