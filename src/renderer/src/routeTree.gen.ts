@@ -12,7 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexLayoutRouteImport } from './routes/_indexLayout'
 import { Route as IndexLayoutIndexRouteImport } from './routes/_indexLayout/index'
 import { Route as IndexLayoutDownloadRouteImport } from './routes/_indexLayout/download'
-import { Route as IndexLayoutPlaylistTitleRouteImport } from './routes/_indexLayout/playlist/$title'
+import { Route as IndexLayoutPlaylistTitleRouteImport } from './routes/_indexLayout/playlist.$title'
 
 const IndexLayoutRoute = IndexLayoutRouteImport.update({
   id: '/_indexLayout',

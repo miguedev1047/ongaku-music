@@ -16,7 +16,7 @@ function RouteComponent() {
 
   return (
     <section className="w-full h-full flex flex-col flex-1 gap-4">
-      <h2 className="font-bold uppercase">{title}</h2>
+      <h2 className="font-bold uppercase text-xl">{title}</h2>
       <Suspense fallback={<p>Loading...</p>}>
         <SongList />
       </Suspense>
