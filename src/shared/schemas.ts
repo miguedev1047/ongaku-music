@@ -22,6 +22,25 @@ export const playlistNameSchema = z.object({
     )
 })
 
+export const songNameSchema = z.object({
+  songName: z
+    .string()
+    .trim()
+    .min(2, 'Song name must be at least 2 characters')
+    .max(100, 'Song name must be less than 100 characters')
+    .refine((name) => name.replace(/\s/g, '').length > 0, {
+      message: 'Song name cannot contain only spaces'
+    })
+    .refine(
+      (name) => {
+        return !RESERVED.includes(name.toUpperCase())
+      },
+      {
+        message: 'This song name is reserved by the system'
+      }
+    )
+})
+
 export const downloadSongSchema = z.object({
   url: z.string().trim().min(2, 'Song url must be at least 2 characters'),
   downloadOption: z.string().trim().min(2, 'You must selected a download option'),
