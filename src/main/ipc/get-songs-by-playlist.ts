@@ -45,6 +45,7 @@ function getSongsByPlaylists() {
       id: generateFileId(fileSource),
       path: fileSource,
       title: getTitle(filename),
+      fileName: filename,
       extension: extname(filename),
       playlist: playlistName,
       audioUrl: getAudioUrl(fileSource),
