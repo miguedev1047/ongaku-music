@@ -1,23 +1,20 @@
-import { useDialogActionStore } from '@/stores/dialog-action-store'
-import { useSearchStore } from '@/stores/search-store'
+import { useDialogStore } from '@/stores/dialog-action-store'
 import { useNavigate } from '@tanstack/react-router'
 import { Download, Home, Plus, Search } from 'lucide-react'
 
 export function useNavMain() {
-  const togglePlaylistModal = useSearchStore((state) => state.togglePlaylistModal)
-  const openDialog = useDialogActionStore((state) => state.openDialog)
-
+  const open = useDialogStore((state) => state.open)
   const navigate = useNavigate()
 
-  const NAV_MAIN_ROUTES = [
+  const navMainRoutes = [
     {
       title: 'New playlist',
-      onAction: () => openDialog('new'),
+      onAction: () => open('playlist', 'new', null),
       icon: Plus
     },
     {
       title: 'Search playlist',
-      onAction: () => togglePlaylistModal(),
+      onAction: () => open('playlist', 'search', null),
       icon: Search
     },
     {
@@ -32,5 +29,5 @@ export function useNavMain() {
     }
   ]
 
-  return { NAV_MAIN_ROUTES }
+  return { navMainRoutes }
 }

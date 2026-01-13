@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/sidebar'
 import { PlaylistList, PlaylistSkeleton } from '@/components/playlists/_index'
 import { NavMain } from '@/components/app-sidebar/_index'
-import { DialogActionsContainer } from '@/components/dialog-actions/_index'
+import { PlaylistDialogContainer } from '@/components/dialogs/playlist/_index'
 import { Suspense } from 'react'
 import { useMediaStore } from '@/stores/media-store'
 import { cn } from '@/lib/utils'
@@ -19,7 +19,7 @@ export function AppSidebarLeft() {
   const isIdle = useMediaStore((state) => state.state === 'idle')
 
   return (
-    <DialogActionsContainer>
+    <PlaylistDialogContainer>
       <Sidebar
         data-idle={isIdle}
         className={cn(
@@ -46,6 +46,6 @@ export function AppSidebarLeft() {
           </SidebarGroup>
         </SidebarContent>
       </Sidebar>
-    </DialogActionsContainer>
+    </PlaylistDialogContainer>
   )
 }

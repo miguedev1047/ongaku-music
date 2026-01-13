@@ -13,13 +13,13 @@ import { useForm } from '@tanstack/react-form'
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { useDialogActionStore } from '@/stores/dialog-action-store'
 import { toast } from 'sonner'
 import { useNavigate } from '@tanstack/react-router'
 import { useQueryClient } from '@tanstack/react-query'
+import { useDialogStore } from '@/stores/dialog-action-store'
 
 export function NewPlaylistDialog() {
-  const { closeDialog } = useDialogActionStore()
+  const close = useDialogStore((state) => state.close)
 
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -44,7 +44,7 @@ export function NewPlaylistDialog() {
       navigate({ to: '/playlist/$title', params: { title: newPlaylist } })
       queryClient.invalidateQueries({ queryKey: ['playlists'] })
       toast.success(response.message)
-      closeDialog()
+      close()
     }
   })
 
@@ -52,7 +52,7 @@ export function NewPlaylistDialog() {
     <DialogContent>
       <DialogHeader>
         <DialogTitle>New playlist</DialogTitle>
-        <DialogDescription>Add a new playlist</DialogDescription>
+        <DialogDescription>Add a new playlist.</DialogDescription>
       </DialogHeader>
 
       <form
@@ -90,7 +90,7 @@ export function NewPlaylistDialog() {
 
       <DialogFooter>
         <DialogClose asChild>
-          <Button variant="secondary">Close</Button>
+          <Button variant="secondary">Cancel</Button>
         </DialogClose>
         <Button type="submit" form="new-playlist-form">
           New playlist

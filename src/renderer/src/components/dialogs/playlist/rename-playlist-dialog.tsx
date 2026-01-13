@@ -1,3 +1,5 @@
+import type { PlaylistPayloadProps } from '@/components/dialogs/_types'
+
 import {
   DialogClose,
   DialogContent,
@@ -11,14 +13,14 @@ import { useForm } from '@tanstack/react-form'
 import { toast } from 'sonner'
 import { playlistNameSchema } from '@shared/schemas'
 import { useQueryClient } from '@tanstack/react-query'
-import { useDialogActionStore } from '@/stores/dialog-action-store'
+import { useDialogStore } from '@/stores/dialog-action-store'
 import { useLocation, useNavigate } from '@tanstack/react-router'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
 export function RenamePlaylistDialog() {
-  const selectedPlaylist = useDialogActionStore((state) => state.selectedPlaylist)
-  const closeDialog = useDialogActionStore((state) => state.closeDialog)
+  const dialog = useDialogStore((state) => state.dialog as PlaylistPayloadProps)
+  const close = useDialogStore((state) => state.close)
 
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -26,7 +28,7 @@ export function RenamePlaylistDialog() {
   const location = useLocation()
   const isOnPlaylistRoute = location.pathname.includes('playlist')
 
-  const oldPlaylistName = selectedPlaylist?.title
+  const oldPlaylistName = dialog.payload.playlist.title
 
   const form = useForm({
     defaultValues: {
@@ -59,7 +61,7 @@ export function RenamePlaylistDialog() {
         navigate({ to: '/playlist/$title', params: { title: newPlaylistName } })
       }
 
-      closeDialog()
+      close()
       toast.success(response.message)
       queryClient.invalidateQueries({ queryKey: ['playlists'] })
     }
@@ -107,7 +109,7 @@ export function RenamePlaylistDialog() {
 
       <DialogFooter>
         <DialogClose asChild>
-          <Button variant="secondary">Close</Button>
+          <Button variant="secondary">Cancel</Button>
         </DialogClose>
         <Button type="submit" form="rename-playlist-form">
           Rename playlist

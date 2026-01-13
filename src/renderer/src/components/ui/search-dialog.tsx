@@ -79,11 +79,18 @@ export function SearchDialog<T>({
           </CommandList>
         </Command>
 
-        <div className="absolute inset-x-0 bottom-0 z-20 flex h-10 items-center gap-2 rounded-b-xl border-t border-t-neutral-100 bg-neutral-50 px-4 font-medium text-muted-foreground text-xs dark:border-t-neutral-700 dark:bg-neutral-800">
-          <Kbd>
-            <CornerDownLeft aria-hidden="true" className="size-3" />
-          </Kbd>
-          Select
+        <div className="absolute inset-x-0 bottom-0 z-20 flex h-10 items-center justify-between gap-2 rounded-b-xl border-t border-t-neutral-100 bg-neutral-50 px-4 font-medium text-muted-foreground text-xs dark:border-t-neutral-700 dark:bg-neutral-800">
+          <div className="flex items-center gap-1">
+            <Kbd>
+              <CornerDownLeft aria-hidden="true" className="size-3" />
+            </Kbd>
+            Select
+          </div>
+
+          <div className="flex items-center gap-1">
+            <Kbd>Esc</Kbd>
+            Close
+          </div>
         </div>
       </DialogContent>
     </Dialog>

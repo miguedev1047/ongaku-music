@@ -1,35 +1,22 @@
-import { PlaylistModel } from '@shared/models'
+import type {
+  DialogAction,
+  DialogKey,
+  DialogOpenState,
+  DialogPayload,
+  DialogStore
+} from '@/types/dialog-actions'
 import { create } from 'zustand'
 
-type DialogType = 'none' | 'new' | 'remove' | 'rename'
+export const useDialogStore = create<DialogStore>((set) => ({
+  dialog: { isOpen: false, key: null, action: null, payload: null },
 
-interface DialogActionState {
-  isOpen: boolean
-  type: DialogType
-  selectedPlaylist: PlaylistModel | null
-  openDialog: (type: DialogType) => void
-  setPlaylist: (data: PlaylistModel) => void
-  closeDialog: () => void
-  toggleOpen: () => void
-}
+  toggle: (value) => set({ dialog: { isOpen: value, key: null, action: null, payload: null } }),
 
-export const useDialogActionStore = create<DialogActionState>((set, get) => ({
-  isOpen: false,
-  type: 'none',
-  selectedPlaylist: null,
+  open: <K extends DialogKey, A extends DialogAction<K>>(
+    key: K,
+    action: A,
+    payload: DialogPayload<K, A>
+  ) => set({ dialog: { isOpen: true, key, action, payload } as DialogOpenState }),
 
-  openDialog: (type) => set({ isOpen: true, type }),
-
-  closeDialog: () => set({ isOpen: false, type: 'none', selectedPlaylist: null }),
-
-  setPlaylist: (data) => set({ selectedPlaylist: data }),
-
-  toggleOpen: () => {
-    const state = get()
-    if (state.type !== 'none') {
-      set({ isOpen: false, type: 'none', selectedPlaylist: null })
-      return
-    }
-    set({ isOpen: !state.isOpen })
-  }
+  close: () => set({ dialog: { isOpen: false, key: null, action: null, payload: null } })
 }))
