@@ -1,6 +1,6 @@
 {
   "name": "ongaku-music",
-  "version": "1.0.2-experimental.1",
+  "version": "1.0.3-experimental",
   "description": "A lightweight desktop music player with playlist management and local audio playback",
   "main": "./out/main/index.js",
   "author": {
