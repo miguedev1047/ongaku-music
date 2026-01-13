@@ -1,3 +1,4 @@
+import { SongDialogContainer } from '@/components/dialogs/song/_index'
 import { playlistSongsQueryOpts } from '@/queries/playlists-queries'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useLoaderData } from '@tanstack/react-router'
@@ -12,16 +13,18 @@ export function SongList() {
   const { data } = useSuspenseQuery(playlistSongsQueryOpts(title))
 
   return (
-    <div
-      data-idle={isIdle}
-      className={cn(
-        'w-full min-h-0',
-        'data-[idle=false]:h-[calc(100%-var(--footer-height)-2.5rem)] data-[idle=true]:h-full'
-      )}
-    >
-      <VList className="space-y-2! no-scrollbar" data={data}>
-        {(item) => <SongItem key={item.id} {...item} />}
-      </VList>
-    </div>
+    <SongDialogContainer>
+      <div
+        data-idle={isIdle}
+        className={cn(
+          'w-full min-h-0',
+          'data-[idle=false]:h-[calc(100%-var(--footer-height)-2.5rem)] data-[idle=true]:h-full'
+        )}
+      >
+        <VList className="space-y-2! no-scrollbar" data={data}>
+          {(item) => <SongItem key={item.id} {...item} />}
+        </VList>
+      </div>
+    </SongDialogContainer>
   )
 }
