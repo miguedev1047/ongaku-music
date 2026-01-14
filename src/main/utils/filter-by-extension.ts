@@ -1,5 +1,5 @@
-import { EXTENSIONS } from '../../shared/constants'
+import { MUSIC_EXTENSIONS } from '../../shared/constants'
 
 export function filterByExtension(song: string): boolean {
-  return EXTENSIONS.some((extension) => song.endsWith(extension))
+  return MUSIC_EXTENSIONS.some((extension) => song.endsWith(extension))
 }

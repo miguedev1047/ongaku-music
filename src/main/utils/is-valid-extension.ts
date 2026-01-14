@@ -1,7 +1,7 @@
 import { extname } from 'node:path'
-import { EXTENSIONS } from '../../shared/constants'
+import { MUSIC_EXTENSIONS } from '../../shared/constants'
 
 export function isValidExtension(path: string): boolean {
   const ext = extname(path).toLowerCase()
-  return ext === '' || EXTENSIONS.includes(ext)
+  return ext === '' || MUSIC_EXTENSIONS.includes(ext)
 }

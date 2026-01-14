@@ -7,7 +7,7 @@ export const FRONTEND_PORT = 5173
 export const FRONTEND_HOST = `http://localhost:${FRONTEND_PORT}`
 
 // Extensions
-export const EXTENSIONS = ['.mp3', '.wav', '.flac', '.ogg', '.m4a', '.mp4']
+export const MUSIC_EXTENSIONS = ['.mp3', '.wav', '.flac', '.ogg', '.m4a', '.mp4']
 export const IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp']
 
 // Permissions Flags
