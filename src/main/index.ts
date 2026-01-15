@@ -1,6 +1,6 @@
-import icon from '../../resources/icon.png?asset'
+import AppLogo from '../../resources/app-logo.png?asset'
+
 import type {
-  // GetSong,
   GetSongsByPlaylist,
   NewPlaylist,
   OpenFolderPlaylist,
@@ -34,7 +34,7 @@ function createWindow() {
     height: 720,
     show: false,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    ...(process.platform === 'linux' ? { icon: AppLogo } : { icon: AppLogo }),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
