@@ -1,3 +1,4 @@
+import { SectionContainer } from '@/components/shared/section-container'
 import { SongList } from '@/components/songs/_index'
 import { playlistSongsQueryOpts } from '@/queries/playlists-queries'
 import { createFileRoute } from '@tanstack/react-router'
@@ -15,11 +16,11 @@ function RouteComponent() {
   const { title } = Route.useLoaderData()
 
   return (
-    <section className="w-full h-full flex flex-col flex-1 gap-4">
+    <SectionContainer>
       <h2 className="font-bold uppercase text-xl">{title}</h2>
       <Suspense fallback={<p>Loading...</p>}>
         <SongList />
       </Suspense>
-    </section>
+    </SectionContainer>
   )
 }
