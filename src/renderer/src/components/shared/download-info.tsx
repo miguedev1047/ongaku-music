@@ -13,7 +13,6 @@ export function DownloadInfo() {
 
   return (
     <div className="col-span-2 space-y-2 rounded-md bg-accent p-4">
-      {/* Header */}
       <div className="flex items-center justify-between text-xs font-medium">
         <div className="flex min-w-0 items-center gap-2">
           <ShimmeringText text={isProcessing ? 'Processing…' : 'Downloading…'} />
@@ -23,10 +22,8 @@ export function DownloadInfo() {
         <span className="tabular-nums">{progress.percentage_str}</span>
       </div>
 
-      {/* Progress bar */}
       <Progress value={progress.percentage} />
 
-      {/* Details */}
       <div className="flex justify-between text-[11px] text-muted-foreground">
         <span>
           {progress.downloaded_str} / {progress.total_str}
