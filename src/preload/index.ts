@@ -47,15 +47,6 @@ const api = {
       callback(data)
     })
   }
-
-  // onPlaylistUpdated: (callback: (data: NotifyChangeModel) => void) => {
-  //   ipcRenderer.on("playlist-updated", (_, data) => callback(data))
-  // },
-  // removePlaylistListener: () => {
-  //   ipcRenderer.removeAllListeners("playlist-updated")
-  // },
-  // startWatchPlaylist: (...args: Parameters<WatchPlaylist>) =>
-  //   ipcRenderer.send("start-watch-playlist", ...args)
 }
 
 if (process.contextIsolated) {

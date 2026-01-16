@@ -36,6 +36,7 @@ export default defineConfig(
       ],
       'react-hooks/set-state-in-effect': 'off',
       'react-hooks/immutability': 'off',
+      'prettier/prettier': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
       'react-hooks/static-components': 'off',
       '@typescript-eslint/no-explicit-any': 'off',

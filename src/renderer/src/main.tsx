@@ -16,9 +16,7 @@ const hashHistory = createHashHistory()
 const router = createRouter({
   routeTree,
   history: hashHistory,
-  context: { queryClient },
-  defaultPreload: 'intent',
-  scrollRestoration: true
+  context: { queryClient }
 })
 
 // Register the router instance for type safety

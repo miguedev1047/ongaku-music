@@ -1,9 +1,5 @@
-export function getTitle(filePath: string) {
-  return (
-    filePath
-      .split('/')
-      .at(-1)
-      ?.toString()
-      .replace(/\.[^/.]+$/, '') ?? ''
-  )
+import { basename } from 'node:path'
+
+export function getTitle(filePath: string): string {
+  return basename(filePath).replace(/\.[^/.]+$/, '')
 }

@@ -189,10 +189,6 @@ export function useMediaElement() {
     mediaRef.loop = isLoop
   }, [mediaRef, volumen, isLoop])
 
-  useEffect(() => {
-    return () => setMediaRef(null)
-  }, [setMediaRef])
-
   const handleEnded = () => {
     handleNextSong()
   }

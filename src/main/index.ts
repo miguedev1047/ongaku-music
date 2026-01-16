@@ -22,6 +22,7 @@ import { downloadSong } from './lib/downloader-core'
 import { startMediaServer } from '../server/root'
 import { setupAutoUpdater } from './updater'
 import { preventMultiInstances } from './utils/prevent-multi-instances'
+import { ensureAppDir } from './lib/ensure-dir'
 
 startMediaServer()
 
@@ -65,7 +66,7 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 
@@ -109,6 +110,8 @@ app.whenReady().then(() => {
   ipcMain.handle('download-song', (_event, ...args: Parameters<DownloadSong>) =>
     downloadSong(...args)
   )
+
+  await ensureAppDir()
 
   createWindow()
 
