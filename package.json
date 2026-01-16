@@ -30,6 +30,11 @@
         "deb"
       ],
       "category": "AudioVideo"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
     }
   },
   "scripts": {
