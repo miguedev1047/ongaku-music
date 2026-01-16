@@ -34,6 +34,7 @@ function createWindow() {
     width: 1280,
     height: 720,
     show: false,
+    backgroundMaterial: 'acrylic',
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon: AppLogo } : { icon: AppLogo }),
     webPreferences: {
@@ -44,10 +45,6 @@ function createWindow() {
   })
 
   preventMultiInstances(mainWindow)
-
-  mainWindow.on('ready-to-show', () => {
-    mainWindow?.show()
-  })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
@@ -61,6 +58,10 @@ function createWindow() {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  mainWindow?.on('ready-to-show', () => {
+    mainWindow?.show()
+  })
 }
 
 // This method will be called when Electron has finished
