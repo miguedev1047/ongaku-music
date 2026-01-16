@@ -1,4 +1,5 @@
 import { SectionContainer } from '@/components/shared/section-container'
+import { SongListSkeleton } from '@/components/skeletons'
 import { SongList } from '@/components/songs/_index'
 import { playlistSongsQueryOpts } from '@/queries/playlists-queries'
 import { createFileRoute } from '@tanstack/react-router'
@@ -18,7 +19,7 @@ function RouteComponent() {
   return (
     <SectionContainer>
       <h2 className="font-bold uppercase text-xl">{title}</h2>
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense fallback={<SongListSkeleton />}>
         <SongList />
       </Suspense>
     </SectionContainer>
