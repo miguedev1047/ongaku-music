@@ -1,10 +1,11 @@
+import Marquee from 'react-fast-marquee'
+
 import { Sidebar, SidebarContent } from '@/components/ui/sidebar'
 import { useMediaStore } from '@/stores/media-store'
-import { ScrollingWaveform } from '@/components/ui/waveform'
 import { cn } from '@/lib/utils'
 import { useSongDominantColor } from '@/hooks/use-song--dominant-color'
 import { CoverImage } from '@/components/shared/cover-image'
-import Marquee from 'react-fast-marquee'
+import { AudioVisualizer } from '@/components/audio-visualizer'
 
 export function AppSidebarRight() {
   const isIdle = useMediaStore((state) => state.state === 'idle')
@@ -40,7 +41,7 @@ export function SongInfo() {
   if (!currentSong) return null
 
   return (
-    <div className="w-full h-full p-4 flex flex-col justify-between">
+    <div className="w-full h-full p-4 flex flex-col justify-between relative">
       <div className="space-y-3">
         <h2 className="uppercase text-lg font-semibold">{currentSong.playlist}</h2>
         <figure className="aspect-square overflow-hidden rounded-lg">
@@ -60,14 +61,7 @@ export function SongInfo() {
         </div>
       </div>
 
-      <ScrollingWaveform
-        height={60}
-        barWidth={3}
-        barGap={2}
-        speed={30}
-        fadeEdges={true}
-        barColor="gray"
-      />
+      <AudioVisualizer />
     </div>
   )
 }
