@@ -29,6 +29,7 @@ export function MediaElement() {
       onEnded={handleEnded}
       onError={handleError}
       onTimeUpdate={handleTimeUpdate}
+      crossOrigin="anonymous"
       autoPlay
     />
   )

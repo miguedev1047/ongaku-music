@@ -15,7 +15,7 @@ import {
   CardTitle
 } from '@/components/ui/card'
 import { FieldGroup, Field, FieldLabel, FieldDescription, FieldError } from '@/components/ui/field'
-import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { playlistQueryOpts } from '@/queries/playlists-queries'
 import { DOWNLOAD_OPTS } from '@/constants/general'
 import { DownloadCloud, Folder } from 'lucide-react'
@@ -29,8 +29,6 @@ import { useDownloadStore } from '@/stores/download-store'
 import { DownloadInfo } from '@/components/shared/download-info'
 
 export function DownloadForm() {
-  const queryClient = useQueryClient()
-
   const isDownloading = useDownloadStore((state) => state.isDownloading)
   const setIsDownloading = useDownloadStore((state) => state.setIsDownloading)
   const setProgress = useDownloadStore((state) => state.setProgress)
@@ -69,7 +67,6 @@ export function DownloadForm() {
       form.setFieldValue('url', '')
       setProgress(null)
       setIsDownloading(false)
-      queryClient.invalidateQueries({ queryKey: ['playlist', value.playlistName] })
     }
   })
 

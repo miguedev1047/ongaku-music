@@ -6,11 +6,11 @@ export function useDownloadProgressListener() {
   const setInfoSong = useDownloadStore((s) => s.setInfoSong)
 
   useEffect(() => {
-    console.log('Watching if download...')
     const unsuscribe = window.api.onDownloadSongProgress((data) => {
       setProgress(data.progress)
       setInfoSong(data.info)
     })
     return unsuscribe
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 }

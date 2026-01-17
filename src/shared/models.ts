@@ -124,3 +124,10 @@ export interface SongMetadataModel {
   album: string
   duration: number
 }
+
+export interface OnUpdatePlaylist {
+  event: string
+  path: string
+  playlist: string
+  type: string
+}

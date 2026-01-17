@@ -1,3 +1,4 @@
+import { DownloadInfo } from '@/components/shared/download-info'
 import { SectionContainer } from '@/components/shared/section-container'
 import { SongListSkeleton } from '@/components/skeletons'
 import { SongList } from '@/components/songs/_index'
@@ -18,7 +19,10 @@ function RouteComponent() {
 
   return (
     <SectionContainer>
+      <DownloadInfo />
+
       <h2 className="font-bold uppercase text-xl">{title}</h2>
+
       <Suspense fallback={<SongListSkeleton />}>
         <SongList />
       </Suspense>
