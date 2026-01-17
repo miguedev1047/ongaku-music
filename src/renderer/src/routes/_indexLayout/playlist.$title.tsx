@@ -1,5 +1,4 @@
 import { DownloadInfo } from '@/components/shared/download-info'
-import { SectionContainer } from '@/components/shared/section-container'
 import { SongListSkeleton } from '@/components/skeletons'
 import { SongList } from '@/components/songs/_index'
 import { playlistSongsQueryOpts } from '@/queries/playlists-queries'
@@ -18,7 +17,7 @@ function RouteComponent() {
   const { title } = Route.useLoaderData()
 
   return (
-    <SectionContainer>
+    <section className="w-full h-full flex flex-col gap-4 overflow-y-auto px-1">
       <DownloadInfo />
 
       <h2 className="font-bold uppercase text-xl">{title}</h2>
@@ -26,6 +25,6 @@ function RouteComponent() {
       <Suspense fallback={<SongListSkeleton />}>
         <SongList />
       </Suspense>
-    </SectionContainer>
+    </section>
   )
 }

@@ -7,6 +7,8 @@ import { playlistQueryOpts } from '@/queries/playlists-queries'
 import { MediaPlayer } from '@/components/media-player/media-player'
 import { useDownloadProgressListener } from '@/hooks/use-download-progress-listener'
 import { useWatcher } from '@/hooks/use-watcher'
+import { useMediaStore } from '@/stores/media-store'
+import { cn } from '@/lib/utils'
 
 export const Route = createFileRoute('/_indexLayout')({
   component: RouteComponent,
@@ -34,6 +36,8 @@ export const Route = createFileRoute('/_indexLayout')({
 })
 
 function RouteComponent() {
+  const isIdle = useMediaStore((state) => state.state === 'idle')
+
   useDownloadProgressListener()
   useWatcher()
 
@@ -42,7 +46,7 @@ function RouteComponent() {
       <SidebarProvider
         style={
           {
-            '--sidebar-width': 'calc(var(--spacing) * 60)',
+            '--sidebar-width': 'calc(var(--spacing) * 70)',
             '--footer-height': 'calc(var(--spacing) * 25)'
           } as React.CSSProperties
         }
@@ -51,8 +55,13 @@ function RouteComponent() {
         <AppHeader />
         <div className="flex flex-1">
           <AppSidebarLeft />
-          <SidebarInset>
-            <main className="flex flex-1 flex-col p-4 max-w-280 w-full mx-auto @container/main">
+          <SidebarInset
+            data-idle={isIdle}
+            className={cn(
+              'data-[idle=false]:h-[calc(100svh-var(--footer-height)-4.4rem)] data-[idle=true]:h-[calc(100%-5.5rem)] overflow-hidden'
+            )}
+          >
+            <main className="flex flex-1 flex-col p-4 max-w-300 w-full mx-auto @container/main">
               <Outlet />
             </main>
           </SidebarInset>

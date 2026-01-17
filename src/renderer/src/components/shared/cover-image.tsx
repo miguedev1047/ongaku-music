@@ -29,7 +29,7 @@ export function CoverImage({ className, src, ...props }: CoverImageProps) {
 
   return (
     <>
-      {!loaded && <Skeleton className="size-full" />}
+      {!loaded && <Skeleton className="size-full absolute inset-0" />}
       <img
         onLoad={onLoadImage}
         onError={onErrorImage}

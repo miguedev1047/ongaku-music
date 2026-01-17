@@ -22,18 +22,19 @@ export function AppSidebarLeft() {
     <PlaylistDialogContainer>
       <Sidebar
         data-idle={isIdle}
+        variant="inset"
         className={cn(
           'top-(--header-height) data-[idle=false]:h-[calc(100%-var(--footer-height)-3.5rem)] data-[idle=true]:h-[calc(100%-3.5rem)]'
         )}
       >
-        <SidebarHeader>
+        <SidebarHeader className="bg-background rounded-t-lg">
           <SidebarMenu>
             <Suspense fallback={<NavMainSkeleton />}>
               <NavMain />
             </Suspense>
           </SidebarMenu>
         </SidebarHeader>
-        <SidebarContent className="flex flex-col">
+        <SidebarContent className="bg-background flex flex-col rounded-b-lg">
           <SidebarGroup className="flex flex-col flex-1">
             <SidebarGroupLabel>My playlists</SidebarGroupLabel>
             <SidebarGroupContent className="flex-1 min-h-0">

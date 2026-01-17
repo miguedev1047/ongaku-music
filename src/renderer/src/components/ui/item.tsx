@@ -74,9 +74,11 @@ const itemMediaVariants = cva(
       variant: {
         default: 'bg-transparent',
         icon: "size-8 border rounded-sm bg-muted [&_svg:not([class*='size-'])]:size-4",
-        'image-sm': 'size-10 rounded-sm overflow-hidden [&_img]:size-full [&_img]:object-cover',
-        image: 'size-12 rounded-sm overflow-hidden [&_img]:size-full [&_img]:object-cover',
-        'image-lg': 'size-14 rounded-sm overflow-hidden [&_img]:size-full [&_img]:object-cover'
+        'image-sm':
+          'relative size-10 rounded-sm overflow-hidden [&_img]:size-full [&_img]:object-cover',
+        image: 'relative size-12 rounded-sm overflow-hidden [&_img]:size-full [&_img]:object-cover',
+        'image-lg':
+          'size-14 rounded-sm overflow-hidden [&_img]:size-full [&_img]:object-cover relative'
       }
     },
     defaultVariants: {

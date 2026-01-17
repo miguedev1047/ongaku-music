@@ -24,7 +24,7 @@ export function MediaPlayer() {
   if (!currentSong) return
 
   return (
-    <footer className="absolute bottom-0 inset-x-0 w-full h-(--footer-height) bg-background/20 backdrop-blur-lg z-10 flex items-center gap-20 px-4">
+    <footer className="absolute bottom-0 inset-x-0 w-full h-(--footer-height) bg-background z-10 flex items-center gap-20 px-4">
       <MediaProgressbar />
 
       <MediaSongInfo />

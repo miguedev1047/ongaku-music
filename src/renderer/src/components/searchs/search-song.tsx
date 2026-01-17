@@ -38,14 +38,7 @@ export function SearchSong() {
           <SearchDialogItem key={song.title} onSelect={onSelect} className="p-0! h-12">
             <Item className="p-1!">
               <ItemMedia variant="image-sm">
-                <CoverImage
-                  src={song.picture}
-                  alt={song.title}
-                  width={64}
-                  height={64}
-                  loading="lazy"
-                  className="size-full object-cover"
-                />
+                <CoverImage src={song.picture} alt={song.title} loading="lazy" />
               </ItemMedia>
               <ItemContent>
                 <ItemTitle className="line-clamp-1">{song.title}</ItemTitle>
