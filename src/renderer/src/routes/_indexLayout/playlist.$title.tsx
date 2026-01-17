@@ -1,6 +1,7 @@
 import { DownloadInfo } from '@/components/shared/download-info'
 import { SongListSkeleton } from '@/components/skeletons'
-import { SongList } from '@/components/songs/_index'
+import { SongList, SongListHeader } from '@/components/songs/_index'
+import { Spinner } from '@/components/ui/spinner'
 import { playlistSongsQueryOpts } from '@/queries/playlists-queries'
 import { createFileRoute } from '@tanstack/react-router'
 import { Suspense } from 'react'
@@ -14,13 +15,13 @@ export const Route = createFileRoute('/_indexLayout/playlist/$title')({
 })
 
 function RouteComponent() {
-  const { title } = Route.useLoaderData()
-
   return (
     <section className="w-full h-full flex flex-col gap-4 overflow-y-auto px-1">
       <DownloadInfo />
 
-      <h2 className="font-bold uppercase text-xl">{title}</h2>
+      <Suspense fallback={<Spinner />}>
+        <SongListHeader />
+      </Suspense>
 
       <Suspense fallback={<SongListSkeleton />}>
         <SongList />
