@@ -15,7 +15,7 @@ import type {
 
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { DownloadSongProgressModel } from '../shared/models'
+import { DownloadSongProgressModel, OnUpdatePlaylist } from '../shared/models'
 
 const api = {
   getPlaylists: (...args: Parameters<GetPlaylists>) => ipcRenderer.invoke('get-playlists', ...args),
@@ -46,6 +46,13 @@ const api = {
     ipcRenderer.on('on-download-progress-song', (_, data) => {
       callback(data)
     })
+  },
+  onUpdatedPlaylist: (callback: (data: OnUpdatePlaylist) => void) => {
+    const listener = (_event: Electron.IpcRendererEvent, data: OnUpdatePlaylist) => callback(data)
+    ipcRenderer.on('on-updated-playlist', listener)
+    return () => {
+      ipcRenderer.removeListener('on-updated-playlist', listener)
+    }
   }
 }
 

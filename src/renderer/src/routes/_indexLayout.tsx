@@ -6,6 +6,7 @@ import { Spinner } from '@/components/ui/spinner'
 import { playlistQueryOpts } from '@/queries/playlists-queries'
 import { MediaPlayer } from '@/components/media-player/media-player'
 import { useDownloadProgressListener } from '@/hooks/use-download-progress-listener'
+import { useWatcher } from '@/hooks/use-watcher'
 
 export const Route = createFileRoute('/_indexLayout')({
   component: RouteComponent,
@@ -34,6 +35,8 @@ export const Route = createFileRoute('/_indexLayout')({
 
 function RouteComponent() {
   useDownloadProgressListener()
+  useWatcher()
+
   return (
     <div className="[--header-height:calc(--spacing(14))]">
       <SidebarProvider

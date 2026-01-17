@@ -23,6 +23,7 @@ import { startMediaServer } from '../server'
 import { setupAutoUpdater } from './updater'
 import { preventMultiInstances } from './utils/prevent-multi-instances'
 import { ensureAppDir } from './lib/ensure-dir'
+import { appWatcher } from './utils/app-watcher'
 
 startMediaServer()
 
@@ -44,8 +45,6 @@ function createWindow() {
     }
   })
 
-  preventMultiInstances(mainWindow)
-
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }
@@ -62,6 +61,10 @@ function createWindow() {
   mainWindow?.on('ready-to-show', () => {
     mainWindow?.show()
   })
+
+  preventMultiInstances(mainWindow)
+
+  appWatcher({ mainWindow })
 }
 
 // This method will be called when Electron has finished
@@ -133,6 +136,8 @@ app.whenReady().then(async () => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
+  appWatcher({ mainWindow })
+
   if (process.platform !== 'darwin') {
     app.quit()
   }

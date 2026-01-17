@@ -7,7 +7,8 @@ import type {
   DownloadSongProgressModel,
   MoveSongModel,
   RenameSongModel,
-  RemoveSongModel
+  RemoveSongModel,
+  OnUpdatePlaylist
 } from '../shared/models'
 import type { ElectronAPI } from '@electron-toolkit/preload'
 
@@ -33,6 +34,8 @@ declare global {
 
       downloadSong: (props: DownloadSongModel) => Promise<ResponseModel>
       onDownloadSongProgress: (callback: (data: DownloadSongProgressModel) => void) => void
+
+      onUpdatedPlaylist: (callback: (data: OnUpdatePlaylist) => void) => void
     }
   }
 }
