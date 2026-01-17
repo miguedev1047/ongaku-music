@@ -1,5 +1,5 @@
 import fs from 'fs-extra'
-import type { GetSongsByPlaylistModel, SongMetadataModel } from '../../shared/models'
+import type { GetSongsByPlaylistModel } from '../../shared/models'
 import { PLAYLIST_DIR } from '../../shared/directories'
 import { extname, join } from 'node:path'
 import { readdir, stat } from 'node:fs/promises'
@@ -7,8 +7,6 @@ import { filterByExtension } from '../utils/filter-by-extension'
 import { generateFileId } from '../utils/generate-id'
 import { getTitle } from '../../server/utils/get-title'
 import { getAudioUrl, getCoverUrl, getSongMetadata } from '../../shared/helpers'
-
-const metadataCache = new Map<string, SongMetadataModel>()
 
 function getSongsByPlaylists() {
   async function get(playlist: string | undefined): Promise<GetSongsByPlaylistModel[]> {
@@ -32,14 +30,7 @@ function getSongsByPlaylists() {
     const playlistPath = join(PLAYLIST_DIR, playlistName)
     const fileSource = join(playlistPath, filename)
     const stats = await stat(fileSource)
-
-    const cacheKey = `${playlistPath}/${filename}`
-    let songMetadata = metadataCache.get(cacheKey)
-
-    if (!songMetadata) {
-      songMetadata = await getSongMetadata(fileSource)
-      metadataCache.set(cacheKey, songMetadata)
-    }
+    const songMetadata = await getSongMetadata(fileSource)
 
     const finalData: GetSongsByPlaylistModel = {
       id: generateFileId(fileSource),

@@ -9,14 +9,24 @@ export function DownloadInfo() {
 
   if (!progress || !info || !isDownloading) return null
 
-  const isProcessing = progress.percentage === 100
+  const isPlaylist = info._type === 'playlist'
+
+  const isProcessingPlaylist = progress.percentage === 100 && isPlaylist
+  const isProcessingSong = progress.percentage === 100 && !isPlaylist
 
   return (
     <div className="col-span-2 space-y-2 rounded-md bg-accent p-4">
       <div className="flex items-center justify-between text-xs font-medium">
         <div className="flex min-w-0 items-center gap-2">
-          <ShimmeringText text={isProcessing ? 'Processing…' : 'Downloading…'} />
-          <span className="line-clamp-1 text-muted-foreground">{info.title}</span>
+          {isProcessingPlaylist && (
+            <ShimmeringText
+              text={isProcessingPlaylist ? 'Processing Song...' : 'Downloading Song of:'}
+            />
+          )}
+          {isProcessingSong && (
+            <ShimmeringText text={isProcessingPlaylist ? 'Processing playlist…' : 'Downloading…'} />
+          )}
+          <span className="line-clamp-1 max-w-100 w-full text-muted-foreground">{info.title}</span>
         </div>
 
         <span className="tabular-nums">{progress.percentage_str}</span>
