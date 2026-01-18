@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexLayoutRouteImport } from './routes/_indexLayout'
 import { Route as IndexLayoutIndexRouteImport } from './routes/_indexLayout/index'
+import { Route as IndexLayoutSettingsRouteImport } from './routes/_indexLayout/settings'
 import { Route as IndexLayoutDownloadRouteImport } from './routes/_indexLayout/download'
 import { Route as IndexLayoutPlaylistTitleRouteImport } from './routes/_indexLayout/playlist.$title'
 
@@ -21,6 +22,11 @@ const IndexLayoutRoute = IndexLayoutRouteImport.update({
 const IndexLayoutIndexRoute = IndexLayoutIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => IndexLayoutRoute,
+} as any)
+const IndexLayoutSettingsRoute = IndexLayoutSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => IndexLayoutRoute,
 } as any)
 const IndexLayoutDownloadRoute = IndexLayoutDownloadRouteImport.update({
@@ -37,11 +43,13 @@ const IndexLayoutPlaylistTitleRoute =
 
 export interface FileRoutesByFullPath {
   '/download': typeof IndexLayoutDownloadRoute
+  '/settings': typeof IndexLayoutSettingsRoute
   '/': typeof IndexLayoutIndexRoute
   '/playlist/$title': typeof IndexLayoutPlaylistTitleRoute
 }
 export interface FileRoutesByTo {
   '/download': typeof IndexLayoutDownloadRoute
+  '/settings': typeof IndexLayoutSettingsRoute
   '/': typeof IndexLayoutIndexRoute
   '/playlist/$title': typeof IndexLayoutPlaylistTitleRoute
 }
@@ -49,18 +57,20 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_indexLayout': typeof IndexLayoutRouteWithChildren
   '/_indexLayout/download': typeof IndexLayoutDownloadRoute
+  '/_indexLayout/settings': typeof IndexLayoutSettingsRoute
   '/_indexLayout/': typeof IndexLayoutIndexRoute
   '/_indexLayout/playlist/$title': typeof IndexLayoutPlaylistTitleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/download' | '/' | '/playlist/$title'
+  fullPaths: '/download' | '/settings' | '/' | '/playlist/$title'
   fileRoutesByTo: FileRoutesByTo
-  to: '/download' | '/' | '/playlist/$title'
+  to: '/download' | '/settings' | '/' | '/playlist/$title'
   id:
     | '__root__'
     | '/_indexLayout'
     | '/_indexLayout/download'
+    | '/_indexLayout/settings'
     | '/_indexLayout/'
     | '/_indexLayout/playlist/$title'
   fileRoutesById: FileRoutesById
@@ -85,6 +95,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLayoutIndexRouteImport
       parentRoute: typeof IndexLayoutRoute
     }
+    '/_indexLayout/settings': {
+      id: '/_indexLayout/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof IndexLayoutSettingsRouteImport
+      parentRoute: typeof IndexLayoutRoute
+    }
     '/_indexLayout/download': {
       id: '/_indexLayout/download'
       path: '/download'
@@ -104,12 +121,14 @@ declare module '@tanstack/react-router' {
 
 interface IndexLayoutRouteChildren {
   IndexLayoutDownloadRoute: typeof IndexLayoutDownloadRoute
+  IndexLayoutSettingsRoute: typeof IndexLayoutSettingsRoute
   IndexLayoutIndexRoute: typeof IndexLayoutIndexRoute
   IndexLayoutPlaylistTitleRoute: typeof IndexLayoutPlaylistTitleRoute
 }
 
 const IndexLayoutRouteChildren: IndexLayoutRouteChildren = {
   IndexLayoutDownloadRoute: IndexLayoutDownloadRoute,
+  IndexLayoutSettingsRoute: IndexLayoutSettingsRoute,
   IndexLayoutIndexRoute: IndexLayoutIndexRoute,
   IndexLayoutPlaylistTitleRoute: IndexLayoutPlaylistTitleRoute,
 }
