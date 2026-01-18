@@ -15,11 +15,14 @@ asarUnpack:
   - resources/**
 win:
   executableName: Ongaku Music
+  icon: resources/app-logo.png
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
+  installerIcon: resources/app-logo.png
+  uninstallerIcon: resources/app-logo.png
 linux:
   target:
     - AppImage
