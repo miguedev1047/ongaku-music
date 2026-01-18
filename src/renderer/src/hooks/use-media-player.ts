@@ -180,6 +180,7 @@ export function useMediaElement() {
   const setCurrentTime = useMediaStore((state) => state.setCurrentTime)
   const setPlay = useMediaStore((state) => state.setPlay)
   const setState = useMediaStore((state) => state.setState)
+  const isPlaying = useMediaStore((state) => state.isPlaying)
 
   const { handleNextSong } = useMediaNextSong()
 
@@ -188,6 +189,16 @@ export function useMediaElement() {
     mediaRef.volume = volumen / 100
     mediaRef.loop = isLoop
   }, [mediaRef, volumen, isLoop])
+
+  useEffect(() => {
+    if (!mediaRef) return
+
+    if (isPlaying) {
+      mediaRef.play().catch(() => {})
+    } else {
+      mediaRef.pause()
+    }
+  }, [mediaRef, isPlaying, currentSong])
 
   const handleEnded = () => {
     handleNextSong()
@@ -201,9 +212,13 @@ export function useMediaElement() {
     setCurrentTime(e.currentTarget.currentTime)
   }
 
-  const handleLoad = () => {
-    setState('loaded')
+  const handlePlay = () => {
     setPlay(true)
+    setState('loaded')
+  }
+
+  const handlePause = () => {
+    setPlay(false)
   }
 
   const handleError = () => {
@@ -217,8 +232,9 @@ export function useMediaElement() {
     handleEnded,
     handleLoadedMetadata,
     handleTimeUpdate,
-    handleLoad,
-    handleError
+    handleError,
+    handlePlay,
+    handlePause
   }
 }
 

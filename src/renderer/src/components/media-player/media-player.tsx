@@ -10,17 +10,16 @@ import {
   MediaVolmen
 } from '@/components/media-player/_index'
 import { useMediaStore } from '@/stores/media-store'
-import { Suspense, useEffect } from 'react'
+import { Suspense } from 'react'
 import { MediaPlayerButtonSkeleton } from '@/components/skeletons'
+import { useMediaSession } from '@/hooks/use-media-session'
+import { useMediaShortcuts } from '@/hooks/use-media-player'
 
 export function MediaPlayer() {
+  useMediaShortcuts()
+  useMediaSession()
+
   const currentSong = useMediaStore((state) => state.currentSong)
-  const setMediaRef = useMediaStore((state) => state.setMediaRef)
-
-  useEffect(() => {
-    return () => setMediaRef(null)
-  }, [setMediaRef])
-
   if (!currentSong) return
 
   return (

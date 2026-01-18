@@ -16,6 +16,8 @@ const hashHistory = createHashHistory()
 const router = createRouter({
   routeTree,
   history: hashHistory,
+  defaultPendingComponent: () => <p>Loading...</p>,
+  defaultPendingMs: 0,
   context: { queryClient }
 })
 

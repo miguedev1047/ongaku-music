@@ -58,7 +58,7 @@ function RouteComponent() {
           <SidebarInset
             data-idle={isIdle}
             className={cn(
-              'data-[idle=false]:h-[calc(100svh-var(--footer-height)-4.4rem)] data-[idle=true]:h-[calc(100%-5.5rem)] overflow-hidden'
+              'data-[idle=false]:h-[calc(100svh-var(--footer-height)-4.4rem)] data-[idle=true]:h-[calc(100%-5.5rem)] overflow-y-auto'
             )}
           >
             <main className="flex flex-1 flex-col p-4 max-w-300 w-full mx-auto @container/main">

@@ -101,14 +101,12 @@ export const useMediaStore = create<MediaState>()(
       name: 'media-store',
       partialize: (state) => ({
         currentSong: state.currentSong,
-        isPlaying: state.isPlaying,
         isMuted: state.isMuted,
         volumen: state.volumen,
         playlist: state.playlist,
         isShuffle: state.isShuffle,
         isLoop: state.isLoop,
         state: state.state
-        // Omitimos: ref, currentTime, duration
       })
     }
   )

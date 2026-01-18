@@ -14,11 +14,13 @@ function SongItemMemoized(props: SongModel) {
   const setSong = useMediaStore((state) => state.setSong)
   const setPlaylist = useMediaStore((state) => state.setPlaylist)
   const pushRecentSong = useRecentSongsStore((state) => state.pushRecentSong)
+  const setPlay = useMediaStore((state) => state.setPlay)
 
-  const handlePlaySong = () => {
+  const handlePlaySong = async () => {
     setSong(props)
     pushRecentSong(props)
     setPlaylist(props.playlist)
+    setPlay(true)
   }
 
   return (
