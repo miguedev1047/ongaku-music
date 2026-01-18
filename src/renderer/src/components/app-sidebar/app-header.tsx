@@ -1,4 +1,3 @@
-import { ModeToggle } from '@/components/ui/mode-toggle'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { Link } from '@tanstack/react-router'
@@ -6,7 +5,7 @@ import { SearchSong } from '@/components/searchs/_index'
 import { SearchSongSkeleton } from '@/components/skeletons'
 import { Suspense } from 'react'
 import { Button } from '@/components/ui/button'
-import { MusicIcon } from 'lucide-react'
+import { MusicIcon, Settings } from 'lucide-react'
 
 export function AppHeader() {
   return (
@@ -28,7 +27,11 @@ export function AppHeader() {
         </Suspense>
 
         <div className="ml-auto flex flex-1 grow basis-0 justify-end items-center gap-2">
-          <ModeToggle />
+          <Button size="icon" variant="ghost" asChild>
+            <Link to="/settings">
+              <Settings />
+            </Link>
+          </Button>
         </div>
       </div>
     </header>
