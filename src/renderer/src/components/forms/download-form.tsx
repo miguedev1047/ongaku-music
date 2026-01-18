@@ -32,6 +32,7 @@ export function DownloadForm() {
   const isDownloading = useDownloadStore((state) => state.isDownloading)
   const setIsDownloading = useDownloadStore((state) => state.setIsDownloading)
   const setProgress = useDownloadStore((state) => state.setProgress)
+  const selectPlaylist = useDownloadStore((state) => state.selectPlaylist)
 
   const { data: playlists } = useSuspenseQuery(playlistQueryOpts)
 
@@ -46,6 +47,7 @@ export function DownloadForm() {
     },
     onSubmit: async ({ value }) => {
       setIsDownloading(true)
+      selectPlaylist(value.playlistName)
 
       const finalUrl = getFinalUrl({
         option: value.downloadOption,
@@ -66,6 +68,7 @@ export function DownloadForm() {
       toast.success(response.message)
       form.setFieldValue('url', '')
       setProgress(null)
+      selectPlaylist('none')
       setIsDownloading(false)
     }
   })

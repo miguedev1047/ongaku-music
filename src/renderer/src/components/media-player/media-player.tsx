@@ -12,13 +12,8 @@ import {
 import { useMediaStore } from '@/stores/media-store'
 import { Suspense } from 'react'
 import { MediaPlayerButtonSkeleton } from '@/components/skeletons'
-import { useMediaSession } from '@/hooks/use-media-session'
-import { useMediaShortcuts } from '@/hooks/use-media-player'
 
 export function MediaPlayer() {
-  useMediaShortcuts()
-  useMediaSession()
-
   const currentSong = useMediaStore((state) => state.currentSong)
   if (!currentSong) return
 
