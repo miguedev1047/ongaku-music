@@ -202,6 +202,7 @@ export function useMediaElement() {
 
   const handleEnded = () => {
     handleNextSong()
+    setPlay(true)
   }
 
   const handleLoadedMetadata = (e: MediaEvent) => {
