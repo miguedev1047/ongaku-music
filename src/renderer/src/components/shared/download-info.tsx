@@ -1,32 +1,24 @@
 import { useDownloadStore } from '@/stores/download-store'
 import { Progress } from '@/components/ui/progress'
 import { ShimmeringText } from '@/components/ui/shimmering-text'
+import { getStatusText } from '@/helpers/get-status-download-text'
 
 export function DownloadInfo() {
-  const progress = useDownloadStore((state) => state.progress)
-  const info = useDownloadStore((state) => state.info)
-  const isDownloading = useDownloadStore((state) => state.isDownloading)
+  const { progress, info, isDownloading } = useDownloadStore()
 
   if (!progress || !info || !isDownloading) return null
 
   const isPlaylist = info._type === 'playlist'
+  const phase = progress.percentage === 100 ? 'processing' : 'downloading'
 
-  const isProcessingPlaylist = progress.percentage === 100 && isPlaylist
-  const isProcessingSong = progress.percentage === 100 && !isPlaylist
+  const statusText = getStatusText(phase, isPlaylist)
 
   return (
     <div className="col-span-2 space-y-2 rounded-md bg-accent p-4">
       <div className="flex items-center justify-between text-xs font-medium">
-        <div className="flex min-w-0 items-center gap-2">
-          {isProcessingPlaylist && (
-            <ShimmeringText
-              text={isProcessingPlaylist ? 'Processing Song...' : 'Downloading Song of:'}
-            />
-          )}
-          {isProcessingSong && (
-            <ShimmeringText text={isProcessingPlaylist ? 'Processing playlist…' : 'Downloading…'} />
-          )}
-          <span className="line-clamp-1 max-w-100 w-full text-muted-foreground">{info.title}</span>
+        <div className="flex w-full gap-2">
+          <ShimmeringText text={statusText} />
+          <p className="line-clamp-1 max-w-80 w-full text-muted-foreground">{info.title}</p>
         </div>
 
         <span className="tabular-nums">{progress.percentage_str}</span>
