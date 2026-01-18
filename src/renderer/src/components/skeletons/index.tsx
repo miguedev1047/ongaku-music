@@ -26,3 +26,12 @@ export function SongListSkeleton() {
   ))
   return <ul className="space-y-2">{RENDER_SKELETONS}</ul>
 }
+
+export function SongListHeaderSkeleton() {
+  return (
+    <div className="flex gap-3 items-center">
+      <Skeleton className="w-32 h-5" />
+      <Skeleton className="w-12 h-5" />
+    </div>
+  )
+}
