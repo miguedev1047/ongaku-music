@@ -1,38 +1,22 @@
-import FuzzyText from '@/components/FuzzyText'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { AppHeader, AppSidebarLeft, AppSidebarRight } from '@/components/app-sidebar/_index'
-import { Spinner } from '@/components/ui/spinner'
 import { playlistQueryOpts } from '@/queries/playlists-queries'
 import { MediaPlayer } from '@/components/media-player/media-player'
 import { useDownloadProgressListener } from '@/hooks/use-download-progress-listener'
 import { useWatcher } from '@/hooks/use-watcher'
 import { useMediaStore } from '@/stores/media-store'
 import { cn } from '@/lib/utils'
+import { LoadingLayout } from '@/components/router/loading'
+import { ErrorLayout } from '@/components/router/error'
 
 export const Route = createFileRoute('/_indexLayout')({
   component: RouteComponent,
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(playlistQueryOpts)
   },
-  pendingComponent: () => {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <Spinner className="size-8" />
-          <p className="text-muted-foreground text-sm">Loading...</p>
-        </div>
-      </div>
-    )
-  },
-  errorComponent: () => {
-    return (
-      <div className="flex flex-col gap-4 min-h-screen items-center justify-center p-4">
-        <FuzzyText>Error</FuzzyText>
-        <FuzzyText>404</FuzzyText>
-      </div>
-    )
-  }
+  pendingComponent: LoadingLayout,
+  errorComponent: ErrorLayout
 })
 
 function RouteComponent() {
