@@ -15,22 +15,23 @@ import { memo } from 'react'
 export function PlaylistItemDropdownMemoized(props: PlaylistModel) {
   const playlist = props
   const open = useDialogStore((state) => state.open)
-  const isDownloading = useDownloadStore((state) => state.isDownloading)
-  const isDefaultPlaylist = playlist.title === 'Default'
+  const isActiveDownload = useDownloadStore((state) => state.isDownloading)
+  const activePlaylist = useDownloadStore((state) => state.selectedPlaylist)
 
-  const disabled = isDownloading || isDefaultPlaylist
+  const isSamePlaylist = playlist.title === activePlaylist
+  const isLocked = isActiveDownload && isSamePlaylist
 
   const handleOpenFolder = async () => {
     await window.api.openFolderPlaylist(playlist.title)
   }
 
   const handleRemovePlaylist = () => {
-    if (isDefaultPlaylist || disabled) return
+    if (isLocked) return
     open('playlist', 'remove', { playlist })
   }
 
   const handleRenamePlaylist = () => {
-    if (isDefaultPlaylist || disabled) return
+    if (isLocked) return
     open('playlist', 'rename', { playlist })
   }
 
@@ -47,12 +48,12 @@ export function PlaylistItemDropdownMemoized(props: PlaylistModel) {
           <Folder />
           Open
         </DropdownMenuItem>
-        <DropdownMenuItem disabled={disabled} onClick={handleRenamePlaylist}>
+        <DropdownMenuItem disabled={isLocked} onClick={handleRenamePlaylist}>
           <Pencil />
           Rename
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem disabled={disabled} onClick={handleRemovePlaylist} variant="destructive">
+        <DropdownMenuItem disabled={isLocked} onClick={handleRemovePlaylist} variant="destructive">
           <Trash />
           Remove
         </DropdownMenuItem>
