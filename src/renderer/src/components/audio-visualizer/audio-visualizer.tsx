@@ -90,5 +90,5 @@ export function AudioVisualizer() {
 
   useCanvasVisualizer(canvasRef.current, analyserRef as never, dataArrayRef as never)
 
-  return <canvas ref={canvasRef} className="w-full h-40 absolute bottom-0 inset-x-0" />
+  return <canvas ref={canvasRef} className="w-full h-32 absolute bottom-0 inset-x-0" />
 }

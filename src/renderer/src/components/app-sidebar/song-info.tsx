@@ -1,5 +1,6 @@
 import { useMediaStore } from '@/stores/media-store'
 import { CoverImage } from '@/components/shared/cover-image'
+import { AudioVisualizer } from '@/components/audio-visualizer'
 
 export function SongInfo() {
   const currentSong = useMediaStore((state) => state.currentSong)
@@ -26,6 +27,8 @@ export function SongInfo() {
           </p>
         </div>
       </div>
+
+      <AudioVisualizer />
     </div>
   )
 }
