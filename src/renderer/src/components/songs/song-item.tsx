@@ -27,7 +27,7 @@ function SongItemMemoized(props: SongModel) {
     <SongItemContextMenu song={props}>
       <Item
         data-active={isActive}
-        className="relative bg-card mb-1.5 cursor-pointer data-[active=true]:bg-accent hover:bg-accent/80 transition-colors group/title"
+        className="relative mb-1.5 cursor-pointer data-[active=true]:bg-accent hover:bg-accent/80 transition-colors group/title"
         onClick={handlePlaySong}
         role="button"
       >
