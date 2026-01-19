@@ -83,9 +83,9 @@ export function DownloadForm() {
     >
       <Card>
         <CardHeader>
-          <CardTitle>Download a song</CardTitle>
+          <CardTitle>Download a media</CardTitle>
           <CardDescription>
-            Enter a URL to download a song from supported platforms.
+            Enter a URL to download a media from supported platforms.
           </CardDescription>
         </CardHeader>
         <CardContent>
