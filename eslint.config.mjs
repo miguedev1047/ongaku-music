@@ -41,7 +41,8 @@ export default defineConfig(
       'react-hooks/static-components': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       'react-hooks/refs': 'off',
-      'no-empty': 'off'
+      'no-empty': 'off',
+      'react-refresh/only-export-components': 'off'
     }
   }
 )
