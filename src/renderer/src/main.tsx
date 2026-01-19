@@ -2,11 +2,11 @@ import '@/styles/main.css'
 
 import { scan } from 'react-scan'
 import ReactDOM from 'react-dom/client'
+import { queryClient } from '@/services/react-query'
 import { RouterProvider, createHashHistory, createRouter } from '@tanstack/react-router'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
-import { queryClient } from '@/services/react-query'
 
 scan({ enabled: import.meta.env.DEV })
 
@@ -16,8 +16,9 @@ const hashHistory = createHashHistory()
 const router = createRouter({
   routeTree,
   history: hashHistory,
-  defaultPendingComponent: () => <p>Loading...</p>,
   defaultPendingMs: 0,
+  defaultPreload: 'intent',
+  scrollRestoration: true,
   context: { queryClient }
 })
 
