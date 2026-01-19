@@ -7,3 +7,11 @@ export function LoadingLayout() {
     </div>
   )
 }
+
+export function DefaulLoadingComponent() {
+  return (
+    <div className="flex size-full items-center justify-center">
+      <FuzzyText>Loading</FuzzyText>
+    </div>
+  )
+}
