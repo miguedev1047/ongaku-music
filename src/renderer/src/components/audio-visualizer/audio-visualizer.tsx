@@ -36,7 +36,7 @@ function useCanvasVisualizer(
   dataArrayRef: React.RefObject<Uint8Array>
 ) {
   const theme = useTheme()
-  const isDark = theme.theme === 'dark'
+  const isDark = theme.theme === 'system' || theme.theme === 'dark'
 
   useEffect(() => {
     if (!canvasRef || !analyserRef.current || !dataArrayRef.current) return
