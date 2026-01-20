@@ -15,7 +15,6 @@ export function AppHeader() {
           <Button variant="ghost" asChild>
             <Link to="/">
               <MusicIcon />
-              Ongaku Music
             </Link>
           </Button>
           <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4" />
