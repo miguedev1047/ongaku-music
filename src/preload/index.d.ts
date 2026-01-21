@@ -8,7 +8,8 @@ import type {
   MoveSongModel,
   RenameSongModel,
   RemoveSongModel,
-  OnUpdatePlaylist
+  OnUpdatePlaylist,
+  DetectDependenciesModel
 } from '../shared/models'
 import type { ElectronAPI } from '@electron-toolkit/preload'
 
@@ -36,6 +37,8 @@ declare global {
       onDownloadSongProgress: (callback: (data: DownloadSongProgressModel) => void) => void
 
       onUpdatedPlaylist: (callback: (data: OnUpdatePlaylist) => void) => void
+
+      detectDependencies: () => Promise<DetectDependenciesModel>
     }
   }
 }

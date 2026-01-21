@@ -9,7 +9,8 @@ import type {
   DownloadSong,
   MoveSong,
   RenameSong,
-  RemoveSong
+  RemoveSong,
+  DetectDependencies
 } from '../shared/types'
 import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
@@ -24,6 +25,7 @@ import { setupAutoUpdater } from './updater'
 import { preventMultiInstances } from './utils/prevent-multi-instances'
 import { ensureAppDir } from './lib/ensure-dir'
 import { appWatcher } from './utils/app-watcher'
+import { detectDependencies } from './lib/detect-dependecies'
 
 startMediaServer()
 
@@ -113,6 +115,9 @@ app.whenReady().then(async () => {
 
   ipcMain.handle('download-song', (_event, ...args: Parameters<DownloadSong>) =>
     downloadSong(...args)
+  )
+  ipcMain.handle('detect-dependencies', (_event, ...args: Parameters<DetectDependencies>) =>
+    detectDependencies(...args)
   )
 
   await ensureAppDir()

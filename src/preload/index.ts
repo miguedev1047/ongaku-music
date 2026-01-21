@@ -10,7 +10,8 @@ import type {
   DownloadSong,
   MoveSong,
   RenameSong,
-  RemoveSong
+  RemoveSong,
+  DetectDependencies
 } from '../shared/types'
 
 import { contextBridge, ipcRenderer } from 'electron'
@@ -53,7 +54,9 @@ const api = {
     return () => {
       ipcRenderer.removeListener('on-updated-playlist', listener)
     }
-  }
+  },
+  detectDependencies: (...args: Parameters<DetectDependencies>) =>
+    ipcRenderer.invoke('detect-dependencies', ...args)
 }
 
 if (process.contextIsolated) {
