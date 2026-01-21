@@ -26,3 +26,5 @@ export type RemoveSong = (props: RemoveSongModel) => Promise<ResponseModel>
 export type DownloadSong = (props: DownloadSongModel) => Promise<ResponseModel>
 
 export type WatchPlaylist = (props: WatchPlaylistModel) => Promise<void>
+
+export type DetectDependencies = () => void

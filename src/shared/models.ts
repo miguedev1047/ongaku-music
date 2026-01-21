@@ -6,6 +6,13 @@ export interface ResponseModel {
   code: 'ERROR' | 'SUCCESS'
 }
 
+export interface DetectDependenciesModel {
+  ffmpeg: boolean
+  ytdlp: boolean
+  supported: boolean
+  platform: string
+}
+
 export interface SongListModel {
   name: string
   artist: string
