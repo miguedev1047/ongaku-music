@@ -1,9 +1,59 @@
 import { SidebarMenuSkeleton } from '@/components/ui/sidebar'
 import { Skeleton } from '@/components/ui/skeleton'
 import { SectionContainer } from '../shared/section-container'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card'
+import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from '../ui/item'
+import { Spinner } from '../ui/spinner'
 
 export function DownloadFormSkeleton() {
-  return <Skeleton className="w-full h-95" />
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          <Skeleton className="w-40 h-4" />
+        </CardTitle>
+        <CardDescription>
+          <Skeleton className="w-100 h-3" />
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2 col-span-2">
+            <Skeleton className="w-20 h-3" />
+            <Skeleton className="w-full h-8" />
+            <Skeleton className="w-80 h-4" />
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="w-20 h-3" />
+            <Skeleton className="w-full h-8" />
+            <Skeleton className="w-80 h-4" />
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="w-20 h-3" />
+            <Skeleton className="w-full h-8" />
+            <Skeleton className="w-80 h-4" />
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter>
+        <Skeleton className="w-40 h-8" />
+      </CardFooter>
+    </Card>
+  )
+}
+
+export function DownloadAlertSkeleton() {
+  return (
+    <Item variant="outline">
+      <ItemMedia variant="icon">
+        <Spinner />
+      </ItemMedia>
+      <ItemContent>
+        <ItemTitle>Checking dependencies...</ItemTitle>
+        <ItemDescription>Please wait while we check your system.</ItemDescription>
+      </ItemContent>
+    </Item>
+  )
 }
 
 export function NavMainSkeleton() {
