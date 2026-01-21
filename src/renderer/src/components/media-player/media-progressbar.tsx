@@ -7,6 +7,7 @@ export function MediaProgressbar() {
   return (
     <div className="w-full absolute top-0 inset-x-0">
       <Slider
+        tabIndex={-1}
         disabled={isDisabled}
         value={[seekTime]}
         onValueChange={onValueChange}

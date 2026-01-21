@@ -26,6 +26,7 @@ export function MediaVolmen() {
       </PopoverTrigger>
       <PopoverContent align="center" className="w-10 h-70 bg-background/50 backdrop-blur-lg">
         <Slider
+          tabIndex={-1}
           value={[volumen]}
           onValueChange={handleChangeVolumen}
           max={100}

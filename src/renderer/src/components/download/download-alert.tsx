@@ -15,7 +15,7 @@ import { detectDependenciesQuery } from '@/queries/detect-depdencies-queries'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AlertCircle } from 'lucide-react'
-import { normalizePlatform } from '@/helpers/get-platform'
+import { normalizePlatform } from '@/lib/normalized-platform'
 
 export function DownloadAlert() {
   const { data } = useSuspenseQuery(detectDependenciesQuery)

@@ -27,6 +27,7 @@ import { getFinalUrl } from '@/helpers/get-final-url'
 import { toast } from 'sonner'
 import { useDownloadStore } from '@/stores/download-store'
 import { DownloadInfo } from '@/components/shared/download-info'
+import { detectDependenciesQuery } from '@/queries/detect-depdencies-queries'
 
 export function DownloadForm() {
   const isDownloading = useDownloadStore((state) => state.isDownloading)
@@ -35,6 +36,10 @@ export function DownloadForm() {
   const selectPlaylist = useDownloadStore((state) => state.selectPlaylist)
 
   const { data: playlists } = useSuspenseQuery(playlistQueryOpts)
+  const { data: hasDependencies } = useSuspenseQuery(detectDependenciesQuery)
+
+  const canDownload =
+    !hasDependencies.ytdlp || (!hasDependencies.ffmpeg && hasDependencies.supported)
 
   const form = useForm({
     defaultValues: {
@@ -73,124 +78,123 @@ export function DownloadForm() {
     }
   })
 
+  if (canDownload) return null
+
   return (
-    <form
-      id="download-song-form"
-      onSubmit={(e) => {
-        e.preventDefault()
-        form.handleSubmit()
-      }}
-    >
-      <Card>
-        <CardHeader>
-          <CardTitle>Download a media</CardTitle>
-          <CardDescription>
-            Enter a URL to download a media from supported platforms.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 gap-4">
-            <DownloadInfo />
+    <Card>
+      <CardHeader>
+        <CardTitle>Download a media</CardTitle>
+        <CardDescription>Enter a URL to download a media from supported platforms.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form
+          id="download-media-form"
+          className="grid grid-cols-2 gap-4"
+          onSubmit={(e) => {
+            e.preventDefault()
+            form.handleSubmit()
+          }}
+        >
+          <DownloadInfo />
 
-            <FieldGroup className="col-span-2">
-              <form.Field name="url">
-                {(field) => {
-                  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
-                  return (
-                    <Field data-invalid={isInvalid}>
-                      <FieldLabel htmlFor={field.name}>Url</FieldLabel>
-                      <Input
-                        id={field.name}
-                        name={field.name}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        disabled={isDownloading}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        aria-invalid={isInvalid}
-                        placeholder="https://www.youtube.com/watch?v=PC82Z9e2Mi4"
-                        autoComplete="off"
-                      />
-                      <FieldDescription>Provide a url song.</FieldDescription>
-                      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                    </Field>
-                  )
-                }}
-              </form.Field>
-            </FieldGroup>
+          <FieldGroup className="col-span-2">
+            <form.Field name="url">
+              {(field) => {
+                const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>Url</FieldLabel>
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      disabled={isDownloading}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      aria-invalid={isInvalid}
+                      placeholder="https://www.youtube.com/watch?v=PC82Z9e2Mi4"
+                      autoComplete="off"
+                    />
+                    <FieldDescription>Provide a url song.</FieldDescription>
+                    {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                  </Field>
+                )
+              }}
+            </form.Field>
+          </FieldGroup>
 
-            <FieldGroup>
-              <form.Field name="playlistName">
-                {(field) => {
-                  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
-                  return (
-                    <Field data-invalid={isInvalid}>
-                      <FieldLabel htmlFor={field.name}>Playlist</FieldLabel>
-                      <Select
-                        disabled={isDownloading}
-                        value={field.state.value}
-                        onValueChange={field.handleChange}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a playlist" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {playlists?.map((playlist) => (
-                            <SelectItem key={playlist.title} value={playlist.title}>
-                              <Folder />
-                              {playlist.title}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FieldDescription>Select a playlist.</FieldDescription>
-                      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                    </Field>
-                  )
-                }}
-              </form.Field>
-            </FieldGroup>
+          <FieldGroup>
+            <form.Field name="playlistName">
+              {(field) => {
+                const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>Playlist</FieldLabel>
+                    <Select
+                      disabled={isDownloading}
+                      value={field.state.value}
+                      onValueChange={field.handleChange}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a playlist" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {playlists?.map((playlist) => (
+                          <SelectItem key={playlist.title} value={playlist.title}>
+                            <Folder />
+                            {playlist.title}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FieldDescription>Select a playlist.</FieldDescription>
+                    {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                  </Field>
+                )
+              }}
+            </form.Field>
+          </FieldGroup>
 
-            <FieldGroup>
-              <form.Field name="downloadOption">
-                {(field) => {
-                  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
-                  return (
-                    <Field data-invalid={isInvalid}>
-                      <FieldLabel htmlFor={field.name}>Download Option</FieldLabel>
-                      <Select
-                        disabled={isDownloading}
-                        value={field.state.value}
-                        onValueChange={field.handleChange}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a download option" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {DOWNLOAD_OPTS.map((option) => (
-                            <SelectItem key={option.value} value={option.value}>
-                              {option.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FieldDescription>Select a download option.</FieldDescription>
-                      {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                    </Field>
-                  )
-                }}
-              </form.Field>
-            </FieldGroup>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <CardAction>
-            <RainbowButton disabled={isDownloading} type="submit">
-              <DownloadCloud />
-              {isDownloading ? 'Downloading...' : 'Download'}
-            </RainbowButton>
-          </CardAction>
-        </CardFooter>
-      </Card>
-    </form>
+          <FieldGroup>
+            <form.Field name="downloadOption">
+              {(field) => {
+                const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>Download Option</FieldLabel>
+                    <Select
+                      disabled={isDownloading}
+                      value={field.state.value}
+                      onValueChange={field.handleChange}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a download option" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {DOWNLOAD_OPTS.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FieldDescription>Select a download option.</FieldDescription>
+                    {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                  </Field>
+                )
+              }}
+            </form.Field>
+          </FieldGroup>
+        </form>
+      </CardContent>
+      <CardFooter>
+        <CardAction>
+          <RainbowButton disabled={isDownloading} type="submit" form="download-media-form">
+            <DownloadCloud />
+            {isDownloading ? 'Downloading...' : 'Download'}
+          </RainbowButton>
+        </CardAction>
+      </CardFooter>
+    </Card>
   )
 }

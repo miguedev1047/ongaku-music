@@ -60,7 +60,7 @@ function useCanvasVisualizer(
 
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      const bars = 24
+      const bars = 28
       const step = Math.floor(dataArrayRef.current!.length / bars)
       const barWidth = canvas.width / bars
 
