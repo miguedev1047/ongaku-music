@@ -60,6 +60,11 @@ export function CodeBlockCommand({
       const timer = setTimeout(() => setCopyState('idle'), 2000)
       return () => clearTimeout(timer)
     }
+    return () => {
+      if (copyState === 'idle') {
+        setCopyState('idle')
+      }
+    }
   }, [copyState])
 
   const copyCommand = React.useCallback(async () => {
